@@ -1,0 +1,32 @@
+.shadow-navbar{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+}
+
+.logo-brand{
+    width: 193.61px;
+    height: 42px;
+}
+
+.nav-menu{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.vertical-line{
+    width: 0px;
+    height: 20px;
+    border: 1px #1D94A8 solid;
+    margin-left: 20px;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .vertical-line{
+        display: none;
+    }
+    .nav-menu{
+        padding: 0px;
+    }
+  }
