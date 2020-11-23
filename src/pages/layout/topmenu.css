@@ -16,7 +16,7 @@
 .vertical-line{
     width: 0px;
     height: 20px;
-    border: 1px #1D94A8 solid;
+    border: 1px #1D94A8 ridge;
     margin-left: 20px;
     margin-top: 12px;
     margin-right: 20px;
