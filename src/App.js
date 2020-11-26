@@ -1,29 +1,27 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-import "./App.css"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Discover from "./pages/Discover";
 import Home from "./pages/Home";
+import "./App.css";
+import DiscoverCategory from "./pages/DiscoverCategory";
 
 const App = () => {
-  return ( 
+  return (
     <>
-     <Router>
+      <Router>
         <Switch>
-          <Route path="/about">
-            {/* <About /> */}
+          <Route exact path="/discover/category">
+            <DiscoverCategory />
           </Route>
-          <Route path="/users">
-            {/* <Users /> */}
+          <Route exact path="/discover">
+            <Discover />
           </Route>
-          <Route path="/">
-            <Home/>
+          <Route exact path="/">
+            <Home />
           </Route>
         </Switch>
-    </Router>
+      </Router>
     </>
-   );
-}
- 
+  );
+};
+
 export default App;

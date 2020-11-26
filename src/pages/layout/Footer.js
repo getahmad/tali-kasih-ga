@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 import Logo from "../images/logo.png";
 import "./footer.css"
 
 const Footer = () => {
   return (
-    <div className="footer">
-        <Container>
+    <div className="footer ">
+        <Container> 
         <Row className="row-footer">
           <Col lg={6}>
             <div>
-              <img src={Logo} alt="" />
+              <img className="logo-brand" src={Logo} alt="" />
             </div>
           </Col>
           <Col lg={2} xs={4}>

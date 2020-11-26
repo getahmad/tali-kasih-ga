@@ -1,16 +1,18 @@
-import { Container } from "reactstrap";
+import MoreInfo from "../components/MoreInfo";
+import NewTopic from "../components/NewTopic";
+import TrendingTopic from "../components/TrendingTopic";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
 
 const Home = () => {
   return (
-    <>
+    <div >
       <TopMenu />
-      <Container>
-        <h1>ini home</h1>
-      </Container>
+      <TrendingTopic />
+      <NewTopic />
+      <MoreInfo/>
       <Footer />
-    </>
+    </div>
   );
 };
 
