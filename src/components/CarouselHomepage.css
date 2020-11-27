@@ -1,0 +1,45 @@
+.carousel{
+    top: 69px;
+    margin-bottom: 72px;
+}
+
+.carousel-caption{
+    text-align: left !important;
+    top: 180px;
+    left: 120px !important;
+}
+
+.carousel-caption h1{
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 49px;
+    color: #1D94A8;
+}
+
+.carousel-caption h2{
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 33px;
+    color: #1D94A8;
+}
+
+.link-carousel{
+    margin-top: 26px;
+}
+
+.carousel-indicators{
+    right: 850px !important;   
+}
+
+.carousel-indicators li{
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+}
+
+.carousel-indicators .active{
+    background-color: #A87B14 !important;
+    width: 42px !important;
+    height: 10px !important;
+    border-radius: 14px !important;
+}

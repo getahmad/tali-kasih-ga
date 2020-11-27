@@ -20,7 +20,7 @@ const CardCampaign = () => {
         <Card className="card-style">
           <CardImg top width="100%" src={Medical} alt="Card image cap" />
           <CardBody>
-            <p className="subcategory btn-block">Medical</p>
+            <button className="subcategory ">Medical</button>
             <CardTitle className="card-title">
               Aid for necessary items to help our country
             </CardTitle>
