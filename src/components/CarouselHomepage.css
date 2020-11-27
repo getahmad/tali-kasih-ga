@@ -28,7 +28,7 @@
 }
 
 .carousel-indicators{
-    right: 850px !important;   
+    margin-right: 75%;  
 }
 
 .carousel-indicators li{
