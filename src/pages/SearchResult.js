@@ -10,40 +10,27 @@ import {
 } from "reactstrap";
 import TopMenu from "./layout/TopMenu";
 import Footer from "./layout/Footer";
-import JumbotronCategory from "../components/JumbotronCategory";
 import CardCampaign from "../components/CardCampaign";
 import ICSort from "./images/ic_sort.png";
-import Pagination from "react-js-pagination";
-import "./discovercategory.css"
+import { Link } from "react-router-dom";
+import "font-awesome/css/font-awesome.min.css";
 
-const DiscoverCategory = () => {
+const SearchResult = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  // const [activePage, setActivePage] = useState(1);
-
-  // const handlePageChange = (page) => {
-  //   console.log(page);
-  //   const urlAPI = `https://5fa4bcd2732de900162e85ef.mockapi.io/api/${page}`;
-  //   getData(urlAPI);
-  //   setActivePage(page);
-  // };
-
-  // const getData = (url) => {
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       const { total, data } = res.data;
-  //       setTotal(total);
-  //       setData(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <>
       <TopMenu />
-      <JumbotronCategory />
-      <Container>
+      <Container >
+        <h1 className="subtitle" style={{marginTop:"140px", marginBottom:"27px"}}> Result for “medical help”</h1>
+        <Link to="/discover" className="d-flex align-items-center link-back">
+          <i class="fa fa-long-arrow-left"></i>&nbsp; &nbsp;
+          <p style={{ marginTop: "15px" }}>See all categories</p>
+        </Link>
+      </Container>
+
+      <Container style={{marginTop:"70px"}}>
         <Row>
           <Col>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -68,8 +55,6 @@ const DiscoverCategory = () => {
             </Dropdown>
           </Col>
         </Row>
-
-
         <Row className="mt-5 mb-5">
           <Col>
             <CardCampaign />
@@ -81,28 +66,10 @@ const DiscoverCategory = () => {
             <CardCampaign />
           </Col>
         </Row>
-
-
-        <Row>
-          <Col className="d-flex justify-content-end">
-            <Pagination
-              activePage={1}
-              totalItemsCount={10}
-              onChange={2}
-              itemsCountPerPage={10}
-              innerClass="pagination pagination-sm"
-              prevPageText="Previous"
-              nextPageText="Next"
-              itemClass="page-item"
-              linkClass="page-link"
-            />
-          </Col>
-        </Row>
-
       </Container>
       <Footer />
     </>
   );
 };
 
-export default DiscoverCategory;
+export default SearchResult;
