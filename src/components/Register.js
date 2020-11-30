@@ -13,6 +13,8 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
 
   let history = useHistory();
 
@@ -24,8 +26,7 @@ const Register = () => {
       email: email,
       password: password,
     };
-    axios.post(url, bodyData)
-    .then((res) => {
+    axios.post(url, bodyData).then((res) => {
       console.log(res);
       Cookies.set("id", res.id);
       Cookies.set("name", res.name);
@@ -33,6 +34,18 @@ const Register = () => {
       Cookies.set("token", res.token);
       history.push("/login-proses");
     });
+  };
+
+  const checkConfirmPassword = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    if (!value) {
+      setErrorConfirmPassword("confirm password tidak boleh kosong");
+    } else if (password !== value) {
+      setErrorConfirmPassword("password tidak cocok");
+    } else {
+      setErrorConfirmPassword("");
+    }
   };
 
   return (
@@ -89,8 +102,14 @@ const Register = () => {
                 className="form-style"
                 type="password"
                 name="password"
+                value={confirmPassword}
+                onChange={checkConfirmPassword}
                 placeholder="Confirm Password"
+                required                
               />
+              {errorConfirmPassword && (
+                <p className="text-danger" style={{marginBottom:"25px"}}>{errorConfirmPassword}</p>
+              )}
             </FormGroup>
 
             <Button className="btn-login">LOGIN</Button>
