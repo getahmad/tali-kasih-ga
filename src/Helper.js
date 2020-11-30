@@ -2,7 +2,8 @@ import Cookies from "js-cookie";
 
 export function checkLogin() {
   if (typeof Cookies.get("token") === "undefined") {
-    return false;
+    // return false;
+    console.log("belum login")
   } else {
     return true;
   }

@@ -33,6 +33,7 @@ const Register = () => {
       Cookies.set("token", res.token)
       history.push("/")
     })
+
   };
 
   return (
@@ -45,6 +46,7 @@ const Register = () => {
       >
         Register
       </NavLink>
+
       <Modal isOpen={modal} toggle={toggle}>
         <ModalBody className="modal-style">
           <Form className="form-modal" onSubmit={handleSubmit}>
@@ -82,15 +84,16 @@ const Register = () => {
                 required
               />
             </FormGroup>
-            {/* <FormGroup>
+
+            <FormGroup>
               <Input
                 className="form-style"
                 type="password"
                 name="password"
                 placeholder="Confirm Password"
-                required
               />
-            </FormGroup> */}
+            </FormGroup>
+            
             <Button className="btn-login">login</Button>
 
             <div className="login-google d-flex justify-content-center">
