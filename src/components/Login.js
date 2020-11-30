@@ -29,7 +29,7 @@ const Login = () => {
       Cookies.set("name", res.name)
       Cookies.set("email", res.email)
       Cookies.set("token", res.token)
-      history.push("/")
+      history.push("/login-proses");
     })
   }
 
@@ -72,7 +72,7 @@ const Login = () => {
             </FormGroup>
             <NavLink to="/"><p className="subtitle-modal">forgot password?</p></NavLink>
 
-            <Button className="btn-login">login</Button>
+            <Button className="btn-login">LOGIN</Button>
 
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />

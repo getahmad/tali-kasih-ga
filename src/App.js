@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
 import DiscoverCategory from "./pages/DiscoverCategory";
-// import Register from "./components/Register";
 import "./App.css";
+import LoginProses from "./components/LoginProses";
 
 const App = () => {
   return (
@@ -16,9 +16,9 @@ const App = () => {
           <Route exact path="/discover">
             <Discover />
           </Route>
-          {/* <Route exact path="/register">
-            <Register/>
-          </Route> */}
+          <Route exact path="/login-proses">
+            <LoginProses/>
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>

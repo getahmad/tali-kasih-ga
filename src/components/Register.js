@@ -26,14 +26,13 @@ const Register = () => {
     };
     axios.post(url, bodyData)
     .then((res) => {
-      console.log(res)
-      Cookies.set("id", res.id)
-      Cookies.set("name", res.name)
-      Cookies.set("email", res.email)
-      Cookies.set("token", res.token)
-      history.push("/")
-    })
-
+      console.log(res);
+      Cookies.set("id", res.id);
+      Cookies.set("name", res.name);
+      Cookies.set("email", res.email);
+      Cookies.set("token", res.token);
+      history.push("/login-proses");
+    });
   };
 
   return (
@@ -93,8 +92,8 @@ const Register = () => {
                 placeholder="Confirm Password"
               />
             </FormGroup>
-            
-            <Button className="btn-login">login</Button>
+
+            <Button className="btn-login">LOGIN</Button>
 
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />
