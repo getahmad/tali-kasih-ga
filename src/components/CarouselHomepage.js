@@ -9,7 +9,7 @@ const CarouselHomepage = () => {
   return (
     <div
       id="carouselExampleCaptions"
-      className="carousel slide"
+      className="carousel slide carousel-fade"
       data-ride="carousel"
     >
       <ol className="carousel-indicators">

@@ -11,9 +11,9 @@ import {
 } from 'reactstrap';
 import Logo from "../images/logo.png"
 import ICSearch from "../images/ic-search.png"
-import "./topmenu.css"
 import Register from '../../components/Register';
 import Login from '../../components/Login';
+import "./topmenu.css"
 
 
 const TopMenu = (props) => {
@@ -38,13 +38,24 @@ const TopMenu = (props) => {
             <NavItem>
                 <NavLink to="/discover"  className="nav-link nav-menu nav-donate" >DONATE</NavLink>
             </NavItem>
-          
-            <NavItem>
+
+            <div className="search-container">
+              <form action="/result" method="get">
+                <input className="search expandright" id="searchright" type="search" name="q" placeholder="Search"/>
+            
+                <label className="button searchbutton" for="searchright">
+                  <img src={ICSearch} alt="" className=""/>
+                  </label>
+                 
+              </form>
+            </div>
+                      
+            {/* <NavItem>
               <NavLink to="/search"  className="nav-link nav-menu" style={{color:"#1D94A8", fontWeight:"normal"}}>
                 <img src={ICSearch} alt="" className="mr-2"/>
                 Search
                 </NavLink>
-            </NavItem>
+            </NavItem> */}
 
             <div  className="vertical-line"></div>
 
