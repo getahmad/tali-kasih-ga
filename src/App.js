@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
 import DiscoverCategory from "./pages/DiscoverCategory";
-import "./App.css";
 import LoginProses from "./components/LoginProses";
+import "./App.css";
 
 const App = () => {
   return (
