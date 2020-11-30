@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink,  } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -14,6 +14,7 @@ import ICSearch from "../images/ic-search.png"
 import Register from '../../components/Register';
 import Login from '../../components/Login';
 import "./topmenu.css"
+import { checkLogin } from "../../Helper";
 
 
 const TopMenu = (props) => {
@@ -23,21 +24,34 @@ const TopMenu = (props) => {
   return (
     <div>
       <Navbar light expand="md" className="shadow-navbar fixed-top">
-       <Container>
-       <NavbarBrand href="/" >
-         <img className="logo-brand" src={Logo} alt=""/>
-       </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto  align-items-center" navbar >
-
-            <NavItem>
-                <NavLink to="/campaign"  className="nav-link nav-menu nav-campaign" >CREATE CAMPAIGN</NavLink>
-            </NavItem>
-              
-            <NavItem>
-                <NavLink to="/discover"  className="nav-link nav-menu nav-donate" >DONATE</NavLink>
-            </NavItem>
+        <Container>
+          <NavbarBrand href="/">
+            <img className="logo-brand" src={Logo} alt="" />
+          </NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="ml-auto  align-items-center" navbar>
+              {checkLogin() && (
+                <>
+                  <NavItem>
+                    <NavLink
+                      to="/campaign"
+                      className="nav-link nav-menu nav-campaign"
+                    >
+                      CREATE CAMPAIGN
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      to="/discover"
+                      className="nav-link nav-menu nav-donate"
+                    >
+                      DONATE
+                    </NavLink>
+                  </NavItem>
+                </>
+              )}
+   
 
             <div className="search-container">
               <form action="/result" method="get">
@@ -57,32 +71,44 @@ const TopMenu = (props) => {
                 </NavLink>
             </NavItem> */}
 
-            <div  className="vertical-line"></div>
 
-            <NavItem>
-              {/* <NavLink to="/login"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink> */}
-              <Login/>
-            </NavItem>
+              {!checkLogin() && (
+                <>
+                  <div className="vertical-line"></div>
 
-            <div className="vertical-line"></div>
-            
-            <NavItem>
-              {/* <NavLink to="/register"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink> */}
-               <Register  /> 
-            </NavItem>
-            
-            <div className="vertical-line"></div>
+                  <NavItem>
+                    {/* <NavLink to="/login"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink> */}
+                    <Login />
+                  </NavItem>
+                  <div className="vertical-line"></div>
+                  <NavItem>
+                    {/* <NavLink to="/register"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink> */}
+                    <Register />
+                  </NavItem>
+                </>
+              )}
 
-            <NavItem>
-              <NavLink to="/user"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>My Profile</NavLink>
-            </NavItem>
+              {checkLogin() && (
+                <>
+                  <div className="vertical-line"></div>
 
-          </Nav>
-        </Collapse>
-       </Container>
+                  <NavItem>
+                    <NavLink
+                      to="/user"
+                      className="nav-link nav-menu"
+                      style={{ color: "#1D94A8" }}
+                    >
+                      My Profile
+                    </NavLink>
+                  </NavItem>
+                </>
+              )}
+            </Nav>
+          </Collapse>
+        </Container>
       </Navbar>
     </div>
   );
-}
+};
 
 export default TopMenu;
