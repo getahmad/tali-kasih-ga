@@ -3,6 +3,7 @@ import Discover from "./pages/Discover";
 import Home from "./pages/Home";
 import "./App.css";
 import DiscoverCategory from "./pages/DiscoverCategory";
+import CampaignDetail from "./pages/CampaignDetail"
 
 const App = () => {
   return (
@@ -14,6 +15,9 @@ const App = () => {
           </Route>
           <Route exact path="/discover">
             <Discover />
+          </Route>
+          <Route exact path="/detail/donate">
+            <CampaignDetail/>
           </Route>
           <Route exact path="/">
             <Home />
