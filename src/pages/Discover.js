@@ -12,8 +12,26 @@ import ICreligious from "./images/ic_Religious.png";
 import ICsocioprenuer from "./images/ic_Sociopreneur.png";
 import "./discover.css";
 import CardCampaign from "../components/CardCampaign";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "../components/Loading";
 
-const Discover = () => {
+const Discover = (props) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const newData = props.data.slice(0, 3);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    const url = "https://5fad36562ec98b0016048033.mockapi.io/allcampaign";
+    axios.get(url).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <>
       <TopMenu />
@@ -99,17 +117,12 @@ const Discover = () => {
         </Row>
       </Container>
 
-      <Container style={{ marginTop: "119px", marginBottom:"150px" }}>
+      <Container style={{ marginTop: "119px", marginBottom: "150px" }}>
         <h1 className="title-discover-all">Newest</h1>
         <Row>
-          <Col>
-            <CardCampaign />
-          </Col>
-          <Col>
-            <CardCampaign />
-          </Col>
-          <Col>
-            <CardCampaign />
+          <Col className="d-flex justify-content-center">
+            {loading && <Loading type="spokes" color="#1D94A8" />}
+            {!loading && <CardCampaign data={data} />}
           </Col>
         </Row>
       </Container>

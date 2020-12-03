@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -15,29 +15,26 @@ import CardCampaign from "../components/CardCampaign";
 import ICSort from "./images/ic_sort.png";
 import Pagination from "react-js-pagination";
 import "./discovercategory.css"
+import axios from "axios";
+import Loading from "../components/Loading";
 
 const DiscoverCategory = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  // const [activePage, setActivePage] = useState(1);
 
-  // const handlePageChange = (page) => {
-  //   console.log(page);
-  //   const urlAPI = `https://5fa4bcd2732de900162e85ef.mockapi.io/api/${page}`;
-  //   getData(urlAPI);
-  //   setActivePage(page);
-  // };
-
-  // const getData = (url) => {
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       const { total, data } = res.data;
-  //       setTotal(total);
-  //       setData(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    setLoading(true);
+    
+    const url = "https://5fad36562ec98b0016048033.mockapi.io/allcampaign";
+    axios.get(url).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <>
@@ -72,14 +69,11 @@ const DiscoverCategory = () => {
 
         <Row className="mt-5 mb-5">
           <Col>
-            <CardCampaign />
+          <Col className="d-flex justify-content-center">
+            {loading && <Loading type="spokes" color="#1D94A8" />}
+            {!loading && <CardCampaign data={data} />}
           </Col>
-          <Col>
-            <CardCampaign />
-          </Col>
-          <Col>
-            <CardCampaign />
-          </Col>
+          </Col>         
         </Row>
 
 

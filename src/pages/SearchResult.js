@@ -57,14 +57,8 @@ const SearchResult = () => {
         </Row>
         <Row className="mt-5 mb-5">
           <Col>
-            <CardCampaign />
-          </Col>
-          <Col>
-            <CardCampaign />
-          </Col>
-          <Col>
-            <CardCampaign />
-          </Col>
+            {/* <CardCampaign /> */}
+          </Col>          
         </Row>
       </Container>
       <Footer />

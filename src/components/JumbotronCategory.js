@@ -14,7 +14,8 @@ const JumbotronCategory = (props) => {
               <button className="subcategory" style={{marginTop:"70px"}}>Medical</button>
               <h1 className="subtitle">Your little kindness is precious</h1>
               <Link to="/discover" className="d-flex align-items-center link-back">
-                <i class="fa fa-long-arrow-left"></i>&nbsp; &nbsp;
+                <i class="fa fa-long-arrow-left"></i>
+                &nbsp; &nbsp;
                 <p style={{marginTop:"15px"}}>See all categories</p>
               </Link>
             </Col>

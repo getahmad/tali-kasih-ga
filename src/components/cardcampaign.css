@@ -38,7 +38,7 @@
 
 .info-text{
     font-size: 14px;
-    color: #9F9F9F;
+    color: #9F9F9F !important;
     margin-bottom: 0px;
 }
 
