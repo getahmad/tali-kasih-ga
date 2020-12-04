@@ -11,8 +11,8 @@ import {
 } from 'reactstrap';
 import Logo from "../images/logo.png"
 import ICSearch from "../images/ic-search.png"
-import Register from '../../components/Register';
-import Login from '../../components/Login';
+// import Register from '../../components/Register';
+// import Login from '../../components/Login';
 import "./topmenu.css"
 import { checkLogin } from "../../Helper";
 
@@ -77,13 +77,13 @@ const TopMenu = (props) => {
                   <div className="vertical-line"></div>
 
                   <NavItem>
-                    {/* <NavLink to="/login"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink> */}
-                    <Login />
+                    <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink>
+                    {/* <Login /> */}
                   </NavItem>
                   <div className="vertical-line"></div>
                   <NavItem>
-                    {/* <NavLink to="/register"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink> */}
-                    <Register />
+                    <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink>
+                    {/* <Register /> */}
                   </NavItem>
                 </>
               )}

@@ -3,7 +3,7 @@ import Discover from "./pages/Discover";
 import Home from "./pages/Home";
 import DiscoverCategory from "./pages/DiscoverCategory";
 import SearchResult from "./pages/SearchResult";
-import LoginProses from "./components/LoginProses";
+// import LoginProses from "./components/LoginProses";
 import CreateCampaign from "./pages/CreateCampaign";
 import { checkLogin, checkAdmin } from "./Helper";
 import "./App.css";
@@ -22,9 +22,9 @@ const App = () => {
           <Route exact path="/result">
             <SearchResult />
           </Route>
-          <Route exact path="/login-proses">
+          {/* <Route exact path="/login-proses">
             <LoginProses />
-          </Route>
+          </Route> */}
           <Route exact path="/campaign/create">
             <CreateCampaign />
           </Route>
