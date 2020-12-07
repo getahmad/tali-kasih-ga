@@ -21,28 +21,28 @@ const CardCampaign = (props) => {
           <>
             <Col lg={4} xs={6} style={{marginBottom:"30px"}}>
               <Link to="/detail/donate" className="link-card">
-                <Card className="card-style">
+                <Card className="card-style" key={data.campaignId}>
                   <CardImg
                     style={{maxHeight:"250px"}}
                     top
                     width="100%"
-                    src={data.image}
+                    src={data.headerPhoto}
                     alt="Card image cap"
                   />
                   <CardBody>
-                    <button className="subcategory ">Medical</button>
+                    <button className="subcategory ">{data.category}</button>
                     <CardTitle className="card-title">
-                      Aid for necessary items to help our country
+                      {data.title}
                     </CardTitle>
                     <CardSubtitle className="card-subtitle">
-                      Aksi Cepat Tanggap
+                      {data.name}
                     </CardSubtitle>
-                    <Progress className="progress-value" value={75} max={100} />
+                    <Progress className="progress-value" value={data.raised} max={data.goal} />
                     <CardText>
                       <Row>
                         <Col>
                           <p className="info-text">Raised</p>
-                          <p className="info-amount">IDR 30.000.000</p>
+                          <p className="info-amount">IDR {data.raised}</p>
                         </Col>
                         <Col>
                           <p
@@ -58,7 +58,7 @@ const CardCampaign = (props) => {
                               color: "black",
                             }}
                           >
-                            IDR 50.000.000
+                            IDR {data.goal}
                           </p>
                         </Col>
                       </Row>

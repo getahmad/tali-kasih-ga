@@ -30,7 +30,7 @@ const TopMenu = (props) => {
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto  align-items-center" navbar>
+            <Nav className="ml-auto nav-style" navbar>
               {checkLogin() && (
                 <>
                   <NavItem>
@@ -57,7 +57,7 @@ const TopMenu = (props) => {
               <form action="/result" method="get">
                 <input className="search expandright" id="searchright" type="search" name="q" placeholder="Search"/>
             
-                <label className="button searchbutton" for="searchright">
+                <label className="button searchbutton" htmlFor="searchright">
                   <img src={ICSearch} alt="" className=""/>
                   </label>
                  
