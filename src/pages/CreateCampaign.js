@@ -14,12 +14,46 @@ import React, { useState } from "react";
 import ImageUploader from "react-images-upload";
 import "font-awesome/css/font-awesome.min.css";
 import "./CreateCampaign.css";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
+import Axios from "axios";
 
 const CreateCampaign = (props) => {
   const [pictures, setPictures] = useState([]);
-
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
+  };
+
+  // const [headerPhoto, setHeaderPhoto] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [goal, setGoal] = useState("");
+  // const [dueDate, setDueDate] = useState("");
+  const [storyText, setStoryText] = useState("");
+
+  let history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const url =
+      "http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns";
+    const bodyData = {
+      // headerPhoto: headerPhoto,
+      title: title,
+      category: category,
+      goal: goal,
+      // dueDate: dueDate,
+      storyText: storyText,
+    };
+    Axios.post(url, bodyData, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      history.push("/discover");
+    });
   };
 
   return (
@@ -31,7 +65,7 @@ const CreateCampaign = (props) => {
             Create Campaign
           </h1>
           <hr />
-          <Form style={{ marginTop: "24px" }}>
+          <Form style={{ marginTop: "24px" }} onSubmit={handleSubmit}>
             <Row>
               <Col>
                 <ImageUploader
@@ -58,6 +92,7 @@ const CreateCampaign = (props) => {
                     ></i>
                   </sup>
                   <Input
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                     className="input-campaign"
                     type="text"
@@ -76,16 +111,21 @@ const CreateCampaign = (props) => {
                       style={{ fontSize: "8px", color: "#A43F3C" }}
                     ></i>
                   </sup>
-                  <Input type="select" name="select" id="exampleSelect">
+                  <Input
+                    type="select"
+                    name="select"
+                    id="exampleSelect"
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
                     <option disabled>Select campaign category</option>
-                    <option value="">Disability</option>
-                    <option value="">Medical</option>
-                    <option value="">Education</option>
-                    <option value="">Religious</option>
-                    <option value="">Humanity</option>
-                    <option value="">Environment</option>
-                    <option value="">Disaster</option>
-                    <option value="">Sociopreneur</option>
+                    <option value="Disability">Disability</option>
+                    <option value="Medical">Medical</option>
+                    <option value="Education">Education</option>
+                    <option value="Religious">Religious</option>
+                    <option value="Humanity">Humanity</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Disaster">Disaster</option>
+                    <option value="Sociopreneur">Sociopreneur</option>
                   </Input>
                 </FormGroup>
               </Col>
@@ -95,13 +135,13 @@ const CreateCampaign = (props) => {
                 <FormGroup>
                   <Label for="exampleGoal">Goal</Label>{" "}
                   <sup>
-                    {" "}
                     <i
                       class="fa fa-asterisk"
                       style={{ fontSize: "8px", color: "#A43F3C" }}
                     ></i>
                   </sup>
                   <Input
+                    onChange={(e) => setGoal(e.target.value)}
                     required
                     type="number"
                     name="number"
@@ -114,6 +154,7 @@ const CreateCampaign = (props) => {
                 <FormGroup>
                   <Label for="exampleDate">Due date (Optional)</Label>
                   <Input
+                    // onChange={(e) => setDueDate(e.target.value)}
                     type="date"
                     name="date"
                     id="exampleDate"
@@ -127,6 +168,7 @@ const CreateCampaign = (props) => {
                 <FormGroup>
                   <Label for="exampleText">Story</Label>
                   <Input
+                    onChange={(e) => setStoryText(e.target.value)}
                     style={{ height: "200px" }}
                     type="textarea"
                     name="text"
@@ -138,7 +180,7 @@ const CreateCampaign = (props) => {
             </Row>
             <Row>
               <Col className="d-flex justify-content-end">
-                <Button className="btn-create-campaign">CREATE CAMPAIGN</Button>
+                <Button className="btn-create-campaign" >CREATE CAMPAIGN</Button>
               </Col>
             </Row>
           </Form>
@@ -148,5 +190,6 @@ const CreateCampaign = (props) => {
     </>
   );
 };
+
 
 export default CreateCampaign;

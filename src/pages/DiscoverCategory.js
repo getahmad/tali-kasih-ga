@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -14,9 +14,11 @@ import JumbotronCategory from "../components/JumbotronCategory";
 import CardCampaign from "../components/CardCampaign";
 import ICSort from "./images/ic_sort.png";
 import Pagination from "react-js-pagination";
-import "./discovercategory.css"
+import "./discovercategory.css";
 import axios from "axios";
 import Loading from "../components/Loading";
+import Cookies from "js-cookie"
+import { useParams } from "react-router-dom";
 
 const DiscoverCategory = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -24,17 +26,24 @@ const DiscoverCategory = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
+  let {category} = useParams();
+
   useEffect(() => {
     setLoading(true);
-    
-    const url = "https://5fad36562ec98b0016048033.mockapi.io/allcampaign";
-    axios.get(url).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-      setLoading(false);
-    });
-  }, []);
+    const url =`http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns/category?category=${category}`;
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((res) => {
+        setData(res.data);
+        // console.log(res.data);
+        setLoading(false);
+      });
+  }, [category]);
 
   return (
     <>
@@ -66,16 +75,14 @@ const DiscoverCategory = () => {
           </Col>
         </Row>
 
-
         <Row className="mt-5 mb-5">
           <Col>
-          <Col className="d-flex justify-content-center">
-            {loading && <Loading type="spokes" color="#1D94A8" />}
-            {!loading && <CardCampaign data={data} />}
+            <Col className="d-flex justify-content-center">
+              {loading && <Loading type="spokes" color="#1D94A8" />}
+              {!loading && <CardCampaign data={data} />}
+            </Col>
           </Col>
-          </Col>         
         </Row>
-
 
         <Row>
           <Col className="d-flex justify-content-end">
@@ -92,7 +99,6 @@ const DiscoverCategory = () => {
             />
           </Col>
         </Row>
-
       </Container>
       <Footer />
     </>

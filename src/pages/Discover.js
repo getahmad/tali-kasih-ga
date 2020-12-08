@@ -15,21 +15,30 @@ import CardCampaign from "../components/CardCampaign";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../components/Loading";
+import Cookies from "js-cookie";
 
 const Discover = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const newData = props.data.slice(0, 3);
+  const Category = ['disability','medical', 'education', 'religious','humanity','environment','disaster','sociopreneur']
 
   useEffect(() => {
     setLoading(true);
-    
-    const url = "https://5fad36562ec98b0016048033.mockapi.io/allcampaign";
-    axios.get(url).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-      setLoading(false);
-    });
+    const url =
+      "http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((res) => {
+        setData(res.data);
+        // console.log(res.data);
+        setLoading(false);
+      });
+
+  
   }, []);
 
   return (
@@ -43,7 +52,7 @@ const Discover = (props) => {
         </Row>
         <Row className="d-flex justify-content-center ">
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[0]}`}
             exact={true}
             className="nav-link inactive-nav menu-category "
             activeClassName="active-nav"
@@ -53,7 +62,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[1]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -62,7 +71,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[2]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -71,7 +80,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[3]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -80,7 +89,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[4]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -89,7 +98,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[5]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -98,7 +107,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[6]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >
@@ -107,7 +116,7 @@ const Discover = (props) => {
           </NavLink>
 
           <NavLink
-            to="/discover/category"
+            to={`/discover/${Category[7]}`}
             className="nav-link inactive-nav menu-category"
             activeClassName="active-nav"
           >

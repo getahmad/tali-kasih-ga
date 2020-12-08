@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Col,
   Container,
@@ -10,20 +10,45 @@ import {
 } from "reactstrap";
 import TopMenu from "./layout/TopMenu";
 import Footer from "./layout/Footer";
-// import CardCampaign from "../components/CardCampaign";
+import CardCampaign from "../components/CardCampaign";
 import ICSort from "./images/ic_sort.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
+import Axios from "axios";
+import Cookies from "js-cookie";
+import Loading from "../components/Loading";
+
 
 const SearchResult = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
+  const[data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  let {result} = useParams();
+  
+  useEffect(() => {
+    setLoading(true);
+    const url = `http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns/search?title=${result}`
+    Axios
+    .get(url,{
+      headers:{
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      }
+    })
+    .then((res)=>{
+      setData(res.data)
+      console.log(res.data)
+      setLoading(false);
+    })
+  }, [result])
+
+
   return (
     <>
       <TopMenu />
       <Container >
-        <h1 className="subtitle" style={{marginTop:"140px", marginBottom:"27px"}}> Result for “medical help”</h1>
+        <h1 className="subtitle" style={{marginTop:"140px", marginBottom:"27px"}}> Result for “{result}”</h1>
         <Link to="/discover" className="d-flex align-items-center link-back">
           <i class="fa fa-long-arrow-left"></i>&nbsp; &nbsp;
           <p style={{ marginTop: "15px" }}>See all categories</p>
@@ -56,8 +81,9 @@ const SearchResult = () => {
           </Col>
         </Row>
         <Row className="mt-5 mb-5">
-          <Col>
-            {/* <CardCampaign /> */}
+          <Col className="d-flex justify-content-center">
+          {loading && <Loading type="spokes" color="#1D94A8" />}
+          {!loading && <CardCampaign data={data} />}
           </Col>          
         </Row>
       </Container>

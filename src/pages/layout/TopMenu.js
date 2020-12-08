@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -11,15 +11,27 @@ import {
 } from 'reactstrap';
 import Logo from "../images/logo.png"
 import ICSearch from "../images/ic-search.png"
-// import Register from '../../components/Register';
-// import Login from '../../components/Login';
+import Register from '../../components/Register';
+import Login from '../../components/Login';
 import "./topmenu.css"
 import { checkLogin } from "../../Helper";
+
 
 
 const TopMenu = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const [result, setResult] =useState("")
+  let history = useHistory();
+  
+  const handlerSubmit=(e)=>{
+    e.preventDefault()
+    history.push(`/search/${result}`);
+  }
+
+  const handlerChange = (e) => {
+    setResult(e.target.value) 
+  }
 
   return (
     <div>
@@ -35,7 +47,7 @@ const TopMenu = (props) => {
                 <>
                   <NavItem>
                     <NavLink
-                      to="/campaign"
+                      to="/campaign/create"
                       className="nav-link nav-menu nav-campaign"
                     >
                       CREATE CAMPAIGN
@@ -54,8 +66,8 @@ const TopMenu = (props) => {
    
 
             <div className="search-container">
-              <form action="/result" method="get">
-                <input className="search expandright" id="searchright" type="search" name="q" placeholder="Search"/>
+              <form onSubmit={(e)=> handlerSubmit(e)} method="get">
+                <input className="search expandright" id="searchright" type="search"  placeholder="Search" onChange={(e)=>handlerChange(e,'value')}/>
             
                 <label className="button searchbutton" htmlFor="searchright">
                   <img src={ICSearch} alt="" className=""/>
@@ -77,13 +89,13 @@ const TopMenu = (props) => {
                   <div className="vertical-line"></div>
 
                   <NavItem>
-                    <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink>
-                    {/* <Login /> */}
+                    {/* <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink> */}
+                    <Login />
                   </NavItem>
                   <div className="vertical-line"></div>
                   <NavItem>
-                    <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink>
-                    {/* <Register /> */}
+                    {/* <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink> */}
+                    <Register />
                   </NavItem>
                 </>
               )}

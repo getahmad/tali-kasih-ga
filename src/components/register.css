@@ -1,0 +1,50 @@
+.modal-style{
+    background-image: url("./images/bg-modal.png") !important;
+    width: 571px;
+    /* height: 702px; */
+}
+
+.form-modal{
+    margin-left: 78px;
+    margin-right: 78px;
+}
+
+.title-modal{
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 65px;
+    letter-spacing: -0.05em;
+    color: #1D94A8;
+    margin-top: 68px;
+}
+
+.subtitle-modal{
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 1px;
+    text-decoration-line: underline;
+    color: #000000;
+}
+
+.form-style{
+    margin-bottom: 25px;
+    height: 50px !important;
+}
+
+.btn-login{
+    background: #A43F3C !important;
+    border-radius: 3px;
+    width: 100%;
+    height: 46px;
+}
+
+.login-google{
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.ic-google{
+    width: 18.29px;
+    height: 20px;
+    margin-right: 20px;
+}
