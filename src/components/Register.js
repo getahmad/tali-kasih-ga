@@ -20,7 +20,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = "http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/auth/register";
+    const url = "https://binar8-agus-saputra.nandaworks.com/auth/register";
     const bodyData = {
       name: name,
       email: email,

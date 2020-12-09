@@ -17,7 +17,6 @@ import Pagination from "react-js-pagination";
 import "./discovercategory.css";
 import axios from "axios";
 import Loading from "../components/Loading";
-import Cookies from "js-cookie"
 import { useParams } from "react-router-dom";
 
 const DiscoverCategory = () => {
@@ -31,13 +30,9 @@ const DiscoverCategory = () => {
 
   useEffect(() => {
     setLoading(true);
-    const url =`http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns/category?category=${category}`;
+    const url =`https://binar8-agus-saputra.nandaworks.com/campaigns/category?category=${category}`;
     axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      })
+      .get(url)
       .then((res) => {
         setData(res.data);
         // console.log(res.data);

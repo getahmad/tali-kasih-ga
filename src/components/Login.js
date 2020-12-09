@@ -17,7 +17,7 @@ const Login = () => {
 
   const handleSubmit =(e)=>{
     e.preventDefault();
-    const url ="http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/auth/login"
+    const url ="https://binar8-agus-saputra.nandaworks.com/auth/login"
     const bodyData ={
       email:email,
       password : password,
@@ -67,7 +67,7 @@ const Login = () => {
                 name="password"
                 placeholder="Password"
                 onChange={(e)=>setPassword(e.target.value)}
-                required
+                // required
               />
             </FormGroup>
             <NavLink to="/"><p className="subtitle-modal">forgot password?</p></NavLink>

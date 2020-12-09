@@ -15,7 +15,6 @@ import CardCampaign from "../components/CardCampaign";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../components/Loading";
-import Cookies from "js-cookie";
 
 const Discover = (props) => {
   const [data, setData] = useState([]);
@@ -25,13 +24,9 @@ const Discover = (props) => {
   useEffect(() => {
     setLoading(true);
     const url =
-      "http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns";
+      "https://binar8-agus-saputra.nandaworks.com/campaigns";
     axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      })
+      .get(url)
       .then((res) => {
         setData(res.data);
         // console.log(res.data);

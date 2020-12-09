@@ -106,7 +106,7 @@ const TopMenu = (props) => {
 
                   <NavItem>
                     <NavLink
-                      to="/user"
+                      to="/profile"
                       className="nav-link nav-menu"
                       style={{ color: "#1D94A8" }}
                     >

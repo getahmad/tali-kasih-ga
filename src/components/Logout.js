@@ -7,6 +7,8 @@ const Logout=()=>{
     Cookies.remove("id")
     Cookies.remove("name")
     Cookies.remove("email")
+    Cookies.remove("bankName")
+    Cookies.remove("bankNumber")
     history.push("/")
     return null
 }

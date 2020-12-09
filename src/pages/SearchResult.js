@@ -15,7 +15,6 @@ import ICSort from "./images/ic_sort.png";
 import { Link, useParams } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
 import Axios from "axios";
-import Cookies from "js-cookie";
 import Loading from "../components/Loading";
 
 
@@ -29,13 +28,9 @@ const SearchResult = () => {
   
   useEffect(() => {
     setLoading(true);
-    const url = `http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns/search?title=${result}`
+    const url = `https://binar8-agus-saputra.nandaworks.com/campaigns/search?title=${result}`
     Axios
-    .get(url,{
-      headers:{
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      }
-    })
+    .get(url)
     .then((res)=>{
       setData(res.data)
       console.log(res.data)

@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUploader from "react-images-upload";
 import "font-awesome/css/font-awesome.min.css";
 import "./CreateCampaign.css";
@@ -19,38 +19,52 @@ import Cookies from "js-cookie";
 import Axios from "axios";
 
 const CreateCampaign = (props) => {
-  const [pictures, setPictures] = useState([]);
-  const onDrop = (picture) => {
-    setPictures([...pictures, picture]);
-  };
-
-  // const [headerPhoto, setHeaderPhoto] = useState("");
+  // const [headerPhotos, setHeaderPhotos] = useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
+  // const onDrop = (headerPhoto) => {
+  //   setHeaderPhotos([...headerPhotos, headerPhoto]);
+  // };
+  const [headerPhoto]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
+  const [storyImage]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [data, setData] = useState([]);
   const [goal, setGoal] = useState("");
-  // const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [storyText, setStoryText] = useState("");
-
   let history = useHistory();
+
+  useEffect(() => {
+    const urlCategory =
+      "https://binar8-agus-saputra.nandaworks.com/categories";
+    Axios.get(urlCategory, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const url =
-      "http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/campaigns";
+      "https://binar8-agus-saputra.nandaworks.com/campaigns";
+
     const bodyData = {
-      // headerPhoto: headerPhoto,
+      categoryId: categoryId,
+      headerPhoto: headerPhoto,
       title: title,
-      category: category,
       goal: goal,
-      // dueDate: dueDate,
+      dueDate: dueDate,
       storyText: storyText,
+      storyImage:storyImage,
     };
     Axios.post(url, bodyData, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-    })
-    .then((res) => {
+    }).then((res) => {
       console.log(res.data);
       history.push("/discover");
     });
@@ -73,7 +87,7 @@ const CreateCampaign = (props) => {
                   label={"Add Header Photo"}
                   {...props}
                   withIcon={true}
-                  onChange={onDrop}
+                  // onChange={onDrop}
                   imgExtension={[".jpg", ".gif", ".png", ".gif"]}
                   maxFileSize={5242880}
                   withPreview={true}
@@ -115,17 +129,11 @@ const CreateCampaign = (props) => {
                     type="select"
                     name="select"
                     id="exampleSelect"
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => setCategoryId(e.target.value)}
                   >
-                    <option disabled>Select campaign category</option>
-                    <option value="Disability">Disability</option>
-                    <option value="Medical">Medical</option>
-                    <option value="Education">Education</option>
-                    <option value="Religious">Religious</option>
-                    <option value="Humanity">Humanity</option>
-                    <option value="Environment">Environment</option>
-                    <option value="Disaster">Disaster</option>
-                    <option value="Sociopreneur">Sociopreneur</option>
+                    {data.map((data) => (
+                      <option value={data.id}>{data.category}</option>
+                    ))}
                   </Input>
                 </FormGroup>
               </Col>
@@ -154,7 +162,7 @@ const CreateCampaign = (props) => {
                 <FormGroup>
                   <Label for="exampleDate">Due date (Optional)</Label>
                   <Input
-                    // onChange={(e) => setDueDate(e.target.value)}
+                    onChange={(e) => setDueDate(e.target.value)}
                     type="date"
                     name="date"
                     id="exampleDate"
@@ -180,7 +188,7 @@ const CreateCampaign = (props) => {
             </Row>
             <Row>
               <Col className="d-flex justify-content-end">
-                <Button className="btn-create-campaign" >CREATE CAMPAIGN</Button>
+                <Button className="btn-create-campaign">CREATE CAMPAIGN</Button>
               </Col>
             </Row>
           </Form>
@@ -190,6 +198,5 @@ const CreateCampaign = (props) => {
     </>
   );
 };
-
 
 export default CreateCampaign;

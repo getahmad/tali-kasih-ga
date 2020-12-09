@@ -5,8 +5,11 @@ import DiscoverCategory from "./pages/DiscoverCategory";
 import SearchResult from "./pages/SearchResult";
 import LoginProses from "./components/LoginProses";
 import CreateCampaign from "./pages/CreateCampaign";
+import Logout from "./components/Logout"
 // import { checkLogin, checkAdmin } from "./Helper";
 import "./App.css";
+import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 
 const App = () => {
   return (
@@ -25,8 +28,17 @@ const App = () => {
           <Route exact path="/login-proses">
             <LoginProses />
           </Route>
+          <Route exact path="/logout">
+            <Logout/>
+          </Route>
           <Route exact path="/campaign/create">
             <CreateCampaign />
+          </Route>
+          <Route exact path="/profile/edit">
+            <ProfileEdit/>
+          </Route>
+          <Route exact path="/profile">
+            <Profile/>
           </Route>
           {/* {checkLogin() && <></>}
           {checkAdmin() && <></>} */}

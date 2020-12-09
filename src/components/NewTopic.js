@@ -11,8 +11,7 @@ const NewTopic = () => {
 
   useEffect(() => {
       setLoading(true)
-      // const url ="https://5fad36562ec98b0016048033.mockapi.io/allcampaign"
-      const url = `http://ec2-54-251-3-103.ap-southeast-1.compute.amazonaws.com/homepage`
+      const url = `https://binar8-agus-saputra.nandaworks.com/homepage`
       Axios.get(url)
       .then((res)=>{
         setData(res.data)
