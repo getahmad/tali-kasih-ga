@@ -12,14 +12,15 @@
     border: 1px solid #A43F3C;
     border-radius: 4px;
     padding: 4px 18px;
-    width: 100px !important;
     color: #A43F3C;
+    margin-bottom: 17px;
 }
 
 .card-title{
     font-weight: bold;
     font-size: 18px;
     color: black;
+    min-height: 60px;
 }
 
 .card-subtitle{
@@ -38,7 +39,7 @@
 
 .info-text{
     font-size: 14px;
-    color: #9F9F9F;
+    color: #9F9F9F !important;
     margin-bottom: 0px;
 }
 

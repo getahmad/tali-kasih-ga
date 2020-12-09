@@ -1,3 +1,4 @@
+import CarouselHomepage from "../components/CarouselHomepage";
 import MoreInfo from "../components/MoreInfo";
 import NewTopic from "../components/NewTopic";
 import TrendingTopic from "../components/TrendingTopic";
@@ -8,6 +9,7 @@ const Home = () => {
   return (
     <div >
       <TopMenu />
+      <CarouselHomepage/>
       <TrendingTopic />
       <NewTopic />
       <MoreInfo/>
