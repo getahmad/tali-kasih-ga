@@ -12,26 +12,30 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorNotif,setErrorNotif] = useState("");
 
   let history = useHistory();
 
-  const handleSubmit =(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const url ="https://binar8-agus-saputra.nandaworks.com/auth/login"
-    const bodyData ={
-      email:email,
-      password : password,
-    }
-    axios.post(url, bodyData)
-    .then((res)=>{
-      console.log(res.data);
+    const url = "https://binar8-agus-saputra.nandaworks.com/auth/login";
+    const bodyData = {
+      email: email,
+      password: password,
+    };
+    axios.post(url, bodyData).then((res) => {
+      // console.log(res.data);
       Cookies.set("id", res.data.id);
       Cookies.set("name", res.data.name);
       Cookies.set("email", res.data.email);
       Cookies.set("token", res.data.token);
       history.push("/login-proses");
-    })
-  }
+      
+    }).catch(
+      // console.log("salahhhhhh")
+      setErrorNotif("Email and Password do not match")
+    )
+  };
 
   return (
     <div>
@@ -56,7 +60,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </FormGroup>
@@ -66,13 +70,16 @@ const Login = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 // required
               />
             </FormGroup>
-            <NavLink to="/"><p className="subtitle-modal">forgot password?</p></NavLink>
+            <NavLink to="/">
+              <p className="subtitle-modal">forgot password?</p>
+            </NavLink>
 
             <Button className="btn-login">LOGIN</Button>
+            <p style={{textAlign:"center",marginTop:"10px", color:"red"}}>{errorNotif}</p>
 
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />

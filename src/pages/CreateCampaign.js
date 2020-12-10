@@ -17,57 +17,61 @@ import "./CreateCampaign.css";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import Axios from "axios";
+import NoImg from "./images/noimg.png";
 
 const CreateCampaign = (props) => {
   // const [headerPhotos, setHeaderPhotos] = useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
   // const onDrop = (headerPhoto) => {
   //   setHeaderPhotos([...headerPhotos, headerPhoto]);
   // };
-  const [headerPhoto]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
-  const [storyImage]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
+  const [headerPhoto] = useState(`${NoImg}`);
+  const [storyImage] = useState(
+    "https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg"
+  );
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [data, setData] = useState([]);
-  const [goal, setGoal] = useState("");
+  const [goal, setGoal] = useState(0);
   const [dueDate, setDueDate] = useState("");
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
 
   useEffect(() => {
-    const urlCategory =
-      "https://binar8-agus-saputra.nandaworks.com/categories";
+    const urlCategory = "https://binar8-agus-saputra.nandaworks.com/categories";
     Axios.get(urlCategory, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
       setData(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     });
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url =
-      "https://binar8-agus-saputra.nandaworks.com/campaigns";
+    const url = "https://binar8-agus-saputra.nandaworks.com/campaigns";
 
     const bodyData = {
       categoryId: categoryId,
       headerPhoto: headerPhoto,
       title: title,
-      goal: goal,
+      goal: parseInt(goal),
       dueDate: dueDate,
       storyText: storyText,
-      storyImage:storyImage,
+      storyImage: storyImage,
     };
+    console.log(bodyData);
     Axios.post(url, bodyData, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-    }).then((res) => {
-      console.log(res.data);
-      history.push("/discover");
-    });
+    })
+      .then((res) => {
+        console.log(res.data);
+        history.push("/discover");
+      })
+      .catch(console.log(Error));
   };
 
   return (
@@ -162,6 +166,7 @@ const CreateCampaign = (props) => {
                 <FormGroup>
                   <Label for="exampleDate">Due date (Optional)</Label>
                   <Input
+                    required
                     onChange={(e) => setDueDate(e.target.value)}
                     type="date"
                     name="date"
@@ -188,7 +193,9 @@ const CreateCampaign = (props) => {
             </Row>
             <Row>
               <Col className="d-flex justify-content-end">
-                <Button className="btn-create-campaign">CREATE CAMPAIGN</Button>
+                <Button className="btn-create-campaign" type="submit">
+                  CREATE CAMPAIGN
+                </Button>
               </Col>
             </Row>
           </Form>

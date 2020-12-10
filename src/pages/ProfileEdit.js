@@ -81,8 +81,8 @@ const ProfileEdit = () => {
     <>
       <TopMenu />
       <Container>
-        <div className="border-container">
-          <div style={{ margin: "30px" }}>
+        <div className="border-container" style={{ marginBottom:"70px"}}>
+          <div style={{ margin: "30px", }}>
             <Row>
               <Col lg={6} className="d-flex justify-content-start">
                 <h3 className="style-profile-title">My Profile</h3>
@@ -182,8 +182,8 @@ const ProfileEdit = () => {
                     <Label for="exampletext">Bank Account Name</Label>
                     <Input
                       className="form-style"
-                      type="text"
-                      name="text"
+                      type="number"
+                      name="number"
                       // placeholder={bankAccountName}
                       value={bankNumberCookies}
                       onChange={(e) => setBankNumber(e.target.value)}

@@ -26,10 +26,10 @@ const Profile = (props) => {
   const bankName = Cookies.get("bankName");
   const bankNumber = Cookies.get("bankNumber");
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const url = "https://binar8-agus-saputra.nandaworks.com/campaigns/user";
     Axios.get(url, {
       headers: {
@@ -38,7 +38,7 @@ const Profile = (props) => {
     }).then((res) => {
       setData(res.data);
       console.log(res.data);
-      setLoading(false);
+      // setLoading(false);
     });
 
     // const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
@@ -201,13 +201,16 @@ const Profile = (props) => {
           </div>
         </div>
 
-        <div className="border-container" style={{ marginTop: "70px" }}>
+        <div className="border-container" style={{ marginTop: "70px", marginBottom:"70px" }}>
           <div style={{ margin: "30px" }}>
-            <h3 className="style-profile-title">My Campaigns (1)</h3>
+            <h3 className="style-profile-title">
+              My Campaigns ({data.length})
+            </h3>
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
-                {loading && <Loading type="spokes" color="#1D94A8" />}
-                {!loading && <CardCampaign data={data} />}
+                {/* {loading && <Loading type="spokes" color="#1D94A8" />} */}
+                {/* {!loading && <CardCampaign data={data} />} */}
+                <CardCampaign data={data} />
               </Col>
               <Col lg={12} className="d-flex justify-content-center mt-5">
                 <Button className="load-more">LOAD MORE</Button>

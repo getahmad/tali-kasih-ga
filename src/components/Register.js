@@ -15,6 +15,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+  const [errorNotif,setErrorNotif] = useState("");
 
   let history = useHistory();
 
@@ -33,7 +34,9 @@ const Register = () => {
       Cookies.set("email", res.data.email);
       Cookies.set("token", res.data.token);
       history.push("/login-proses");
-    });
+    }).catch(
+      setErrorNotif("Email already registered")
+    )
   };
 
   const checkConfirmPassword = (e) => {
@@ -113,6 +116,7 @@ const Register = () => {
             </FormGroup>
 
             <Button className="btn-login">LOGIN</Button>
+            <p style={{textAlign:"center",marginTop:"10px", color:"red"}}>{errorNotif}</p>
 
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />
