@@ -17,14 +17,14 @@ import "./CreateCampaign.css";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import Axios from "axios";
-import NoImg from "./images/noimg.png";
+// import NoImg from "./images/noimg.png";
 
 const CreateCampaign = (props) => {
   // const [headerPhotos, setHeaderPhotos] = useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
   // const onDrop = (headerPhoto) => {
   //   setHeaderPhotos([...headerPhotos, headerPhoto]);
   // };
-  const [headerPhoto] = useState(`${NoImg}`);
+  const [headerPhoto] = useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
   const [storyImage] = useState(
     "https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg"
   );
