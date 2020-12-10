@@ -29,7 +29,7 @@ const CreateCampaign = (props) => {
   const [categoryId, setCategoryId] = useState("");
   const [data, setData] = useState([]);
   const [goal, setGoal] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState(0);
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
 
@@ -55,7 +55,7 @@ const CreateCampaign = (props) => {
       categoryId: categoryId,
       headerPhoto: headerPhoto,
       title: title,
-      goal: goal,
+      goal: parseInt(goal),
       dueDate: dueDate,
       storyText: storyText,
       storyImage:storyImage,
@@ -131,6 +131,7 @@ const CreateCampaign = (props) => {
                     id="exampleSelect"
                     onChange={(e) => setCategoryId(e.target.value)}
                   >
+                    <option disabled></option>
                     {data.map((data) => (
                       <option value={data.id}>{data.category}</option>
                     ))}
@@ -188,7 +189,7 @@ const CreateCampaign = (props) => {
             </Row>
             <Row>
               <Col className="d-flex justify-content-end">
-                <Button className="btn-create-campaign">CREATE CAMPAIGN</Button>
+                <Button className="btn-create-campaign" type="submit">CREATE CAMPAIGN</Button>
               </Col>
             </Row>
           </Form>

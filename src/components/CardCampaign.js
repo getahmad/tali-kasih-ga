@@ -23,7 +23,7 @@ const CardCampaign = (props) => {
               <Link to="/detail/donate" className="link-card">
                 <Card className="card-style" key={data.campaignId}>
                   <CardImg
-                    style={{maxHeight:"250px"}}
+                    style={{maxHeight:"250px", minHeight:"230px"}}
                     top
                     width="100%"
                     src={data.headerPhoto}
