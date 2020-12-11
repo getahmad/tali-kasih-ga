@@ -28,8 +28,8 @@ const CreateCampaign = (props) => {
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [data, setData] = useState([]);
-  const [goal, setGoal] = useState("");
-  const [dueDate, setDueDate] = useState(0);
+  const [goal, setGoal] = useState(0);
+  const [dueDate, setDueDate] = useState("");
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
 
@@ -161,13 +161,14 @@ const CreateCampaign = (props) => {
               </Col>
               <Col>
                 <FormGroup>
-                  <Label for="exampleDate">Due date (Optional)</Label>
+                  <Label for="exampleDate">Due date </Label>
                   <Input
                     onChange={(e) => setDueDate(e.target.value)}
                     type="date"
                     name="date"
                     id="exampleDate"
                     placeholder="date placeholder"
+                    required
                   />
                 </FormGroup>
               </Col>

@@ -21,12 +21,13 @@ import Loading from "../components/Loading";
 import CardCampaign from "../components/CardCampaign";
 
 const Profile = (props) => {
-  const name = Cookies.get("name");
-  const email = Cookies.get("email");
+  // const name = Cookies.get("name");
+  // const email = Cookies.get("email");
   const bankName = Cookies.get("bankName");
   const bankNumber = Cookies.get("bankNumber");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataUser, setDataUser]= useState([])
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +41,21 @@ const Profile = (props) => {
       console.log(res.data);
       setLoading(false);
     });
+
+    const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
+    Axios.get(urlDataUser, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      Cookies.set("name", res.data[0].name);
+      setDataUser(res.data[0]);
+      console.log(res.data);
+      setLoading(false);
+    });
+
+
+
 
     // const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
     // Axios.get(urlGetBank, {
@@ -87,7 +103,7 @@ const Profile = (props) => {
                     <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={name}
+                      value={dataUser.name}
                     />
                   </FormGroup>
                 </Col>
@@ -97,7 +113,7 @@ const Profile = (props) => {
                     <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={email}
+                      value={dataUser.email}
                     />
                   </FormGroup>
                 </Col>
@@ -203,7 +219,7 @@ const Profile = (props) => {
 
         <div className="border-container" style={{ marginTop: "70px" }}>
           <div style={{ margin: "30px" }}>
-            <h3 className="style-profile-title">My Campaigns (1)</h3>
+            <h3 className="style-profile-title">My Campaigns ({data.length})</h3>
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
                 {loading && <Loading type="spokes" color="#1D94A8" />}
