@@ -17,19 +17,22 @@ import Cookies from "js-cookie";
 import "./profile.css";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 import CardCampaign from "../components/CardCampaign";
 
 const Profile = (props) => {
-  const name = Cookies.get("name");
-  const email = Cookies.get("email");
-  const bankName = Cookies.get("bankName");
-  const bankNumber = Cookies.get("bankNumber");
+  // const name = Cookies.get("name");
+  // const email = Cookies.get("email");
+  // const bankName = Cookies.get("bankName");
+  // const bankNumber = Cookies.get("bankNumber");
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
+  const [dataBank, setDataBank] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  const [error, setError]=useState("")
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const url = "https://binar8-agus-saputra.nandaworks.com/campaigns/user";
     Axios.get(url, {
       headers: {
@@ -37,21 +40,44 @@ const Profile = (props) => {
       },
     }).then((res) => {
       setData(res.data);
-      console.log(res.data);
-      setLoading(false);
+      // console.log(res.data);
+      // setLoading(false);
+    }).catch(err=>{
+      setError("no data")
+      console.log(err);
+    })
+
+    const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
+    Axios.get(urlDataUser, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      setDataUser(res.data[0]);
+      // console.log(res.data[0])
+      Cookies.set("name", res.data[0].name);
     });
 
-    // const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
-    // Axios.get(urlGetBank, {
-    //   headers: {
-    //     Authorization: `Bearer ${Cookies.get("token")}`,
-    //   },
-    // }).then((res) => {
-    //   setData(res.data);
-    //   Cookies.set("bankName", res.data.bankName);
-    //   Cookies.set("bankNumber", res.data.bankNumber);
-    //   console.log(res.data);
-    // });
+    const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
+    Axios.get(urlGetBank, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      
+      if(res===204){
+        setError("mp data")
+      }else{
+        setDataBank(res.data[0]);
+      }
+      // console.log(res.data[0]);
+      // Cookies.set("bankName", res.data.bankName);
+      // Cookies.set("bankNumber", res.data.bankNumber);
+    }).catch(err=>{
+        setError("no data")
+        console.log(err);
+      // console.log(err);
+    })
   }, []);
 
   return (
@@ -87,7 +113,7 @@ const Profile = (props) => {
                     <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={name}
+                      value={dataUser.name}
                     />
                   </FormGroup>
                 </Col>
@@ -97,7 +123,7 @@ const Profile = (props) => {
                     <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={email}
+                      value={dataUser.email}
                     />
                   </FormGroup>
                 </Col>
@@ -109,8 +135,9 @@ const Profile = (props) => {
                     <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={`${bankName}-${bankNumber}`}
+                      value={`${dataBank.bankName}-${dataBank.bankNumber}`}
                     />
+                    <p>{error}</p>
                   </FormGroup>
                 </Col>
               </Row>
@@ -206,8 +233,10 @@ const Profile = (props) => {
             <h3 className="style-profile-title">My Campaigns (1)</h3>
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
-                {loading && <Loading type="spokes" color="#1D94A8" />}
-                {!loading && <CardCampaign data={data} />}
+                {/* {loading && <Loading type="spokes" color="#1D94A8" />} */}
+                <p>{error}</p>
+                {/* {!loading && <CardCampaign data={data} />} */}
+                <CardCampaign data={data} />
               </Col>
               <Col lg={12} className="d-flex justify-content-center mt-5">
                 <Button className="load-more">LOAD MORE</Button>

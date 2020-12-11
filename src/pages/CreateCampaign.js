@@ -28,8 +28,8 @@ const CreateCampaign = (props) => {
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [data, setData] = useState([]);
-  const [goal, setGoal] = useState("");
-  const [dueDate, setDueDate] = useState(0);
+  const [goal, setGoal] = useState(0);
+  const [dueDate, setDueDate] = useState(null);
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
 

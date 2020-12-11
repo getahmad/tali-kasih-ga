@@ -19,7 +19,7 @@ import Loading from "../components/Loading";
 const Discover = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const Category = ['disability','medical', 'education', 'religious','humanity','environment','disaster','sociopreneur']
+  const Category = ['Disability','Medical', 'Education', 'Religious','Humanity','Environment','Disaster','Sociopreneur']
 
   useEffect(() => {
     setLoading(true);
