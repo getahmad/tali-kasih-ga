@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 const CardCampaign = () => {
   return (
     <div>
-      <Link to="/detail/donate" className="link-card">
+      <Link to="/campaign/campaign-detail" className="link-card">
         <Card className="card-style">
           <CardImg top width="100%" src={Medical} alt="Card image cap" />
           <CardBody>

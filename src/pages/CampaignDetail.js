@@ -7,6 +7,7 @@ import ICampaignDetailUser from "../components/images/campaign-user.png";
 import ICampaignDetailDonator from "../components/images/campaign-donator.png";
 import Medical from "../components/images/medical.png";
 import {Timeline, TimelineEvent} from "react-event-timeline";
+import { Link } from "react-router-dom";
 import {
 Card, 
 CardText,
@@ -83,8 +84,8 @@ const CampaignDetail=()=>{
                                         </Card>
                                     </div>
                                 </div>
-                                <Button outline color="info" block>SHARE</Button>
-                                <Button color="danger" block>DONATE</Button>
+                                <Button className="share-campaign-button" outline color="info" block>SHARE</Button>
+                                <Button className="donate-campaign-button" color="danger" block><Link to="/campaign/campaign-detail/donate">DONATE</Link></Button>
                             </CardBody>
                         </Card>
                     </div>
