@@ -89,13 +89,13 @@ const TopMenu = (props) => {
                   <div className="vertical-line"></div>
 
                   <NavItem>
-                    {/* <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Login</NavLink> */}
-                    <Login />
+                    <NavLink to="#"  className="nav-link nav-menu" style={{color:"#1D94A8"}}><Login /></NavLink>
+                    
                   </NavItem>
                   <div className="vertical-line"></div>
                   <NavItem>
-                    {/* <NavLink to="/"  className="nav-link nav-menu" style={{color:"#1D94A8"}}>Register</NavLink> */}
-                    <Register />
+                    <NavLink to="#" className="nav-link nav-menu" style={{color:"#1D94A8"}}><Register /></NavLink>
+                    
                   </NavItem>
                 </>
               )}

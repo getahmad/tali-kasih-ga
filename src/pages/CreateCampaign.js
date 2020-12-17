@@ -19,12 +19,27 @@ import Cookies from "js-cookie";
 import Axios from "axios";
 
 const CreateCampaign = (props) => {
-  // const [headerPhotos, setHeaderPhotos] = useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
-  // const onDrop = (headerPhoto) => {
-  //   setHeaderPhotos([...headerPhotos, headerPhoto]);
-  // };
-  const [headerPhoto]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
-  const [storyImage]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
+  const [headerPhotos, setHeaderPhotos] = useState(
+    "https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg"
+  );
+  const onDrop = (headerPhoto) => {
+    const urlUpload = "https://binar8-agus-saputra.nandaworks.com/files";
+    Axios.post(urlUpload, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    }).then((res) => {
+      setHeaderPhotos([...headerPhotos, headerPhoto]);
+    });
+
+    let formdata = new FormData();
+    formdata.append("file", headerPhotos);
+  };
+
+  // const [headerPhoto]=useState("https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg");
+  const [storyImage] = useState(
+    "https://cdn.pixabay.com/photo/2016/02/19/11/19/office-1209640_960_720.jpg"
+  );
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [data, setData] = useState([]);
@@ -34,8 +49,7 @@ const CreateCampaign = (props) => {
   let history = useHistory();
 
   useEffect(() => {
-    const urlCategory =
-      "https://binar8-agus-saputra.nandaworks.com/categories";
+    const urlCategory = "https://binar8-agus-saputra.nandaworks.com/categories";
     Axios.get(urlCategory, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
@@ -48,17 +62,16 @@ const CreateCampaign = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url =
-      "https://binar8-agus-saputra.nandaworks.com/campaigns";
+    const url = "https://binar8-agus-saputra.nandaworks.com/campaigns";
 
     const bodyData = {
       categoryId: categoryId,
-      headerPhoto: headerPhoto,
+      headerPhoto: headerPhotos,
       title: title,
       goal: parseInt(goal),
       dueDate: dueDate,
       storyText: storyText,
-      storyImage:storyImage,
+      storyImage: storyImage,
     };
     Axios.post(url, bodyData, {
       headers: {
@@ -87,7 +100,7 @@ const CreateCampaign = (props) => {
                   label={"Add Header Photo"}
                   {...props}
                   withIcon={true}
-                  // onChange={onDrop}
+                  onChange={onDrop}
                   imgExtension={[".jpg", ".gif", ".png", ".gif"]}
                   maxFileSize={5242880}
                   withPreview={true}
@@ -131,7 +144,9 @@ const CreateCampaign = (props) => {
                     id="exampleSelect"
                     onChange={(e) => setCategoryId(e.target.value)}
                   >
-                    <option disabled></option>
+                    <option value="" selected disabled>
+                      Please select
+                    </option>
                     {data.map((data) => (
                       <option value={data.id}>{data.category}</option>
                     ))}
@@ -189,7 +204,9 @@ const CreateCampaign = (props) => {
             </Row>
             <Row>
               <Col className="d-flex justify-content-end">
-                <Button className="btn-create-campaign" type="submit">CREATE CAMPAIGN</Button>
+                <Button className="btn-create-campaign" type="submit">
+                  CREATE CAMPAIGN
+                </Button>
               </Col>
             </Row>
           </Form>

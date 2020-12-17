@@ -28,7 +28,7 @@ const NewTopic = () => {
         <Row style={{ marginBottom: "70px" }}>
           <Col className="d-flex justify-content-center">
             {loading && <Loading type="spokes" color="#1D94A8" /> } 
-            {!loading && <CardCampaign data={data.slice(0,3)}/>}
+            {!loading && <CardCampaign data={data}/>}
           </Col>
         </Row>
       </Container>

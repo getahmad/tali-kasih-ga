@@ -12,47 +12,71 @@ import { Link, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
-import imgProfile from "./images/profile.png";
-import { useState } from "react";
+import Avatar from "react-avatar";
+// import imgProfile from "./images/profile.png";
+import { useEffect, useState } from "react";
 import Axios from "axios";
+import Hider from "react-hider";
+import "./profile.css";
 
 const ProfileEdit = () => {
-  //   const name = Cookies.get("name");
-  //   const email = Cookies.get("email");
-  const bankNameCookies = Cookies.get("bankName");
-  const bankNumberCookies = Cookies.get("bankNumber");
+  const [show, setShow] = useState(false);
+  const [dataBank, setDataBank] = useState([]);
+  const [noDataBank, setNoDataBank] = useState("");
 
   const [name, setName] = useState(Cookies.get("name"));
   const [email, setEmail] = useState(Cookies.get("email"));
-  //   const [password, setPassword] = useState(Cookies.get("password"));
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  // const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+
   const [bankName, setBankName] = useState("");
   const [bankNumber, setBankNumber] = useState("");
   const history = useHistory();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const url = "https://binar8-agus-saputra.nandaworks.com/users";
-    const urlPostBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
-    const bodyData = {
-      name: name,
-      email: email,
-      //   password: password,
-    };
-    const bodyDataBank = {
-      bankName: bankName,
-      bankNumber: bankNumber,
-    };
-    Axios.post(urlPostBank, bodyDataBank, {
+  const [idBank, setIdBank] = useState("");
+  const [bankNamePatch, setBankNamePatch] = useState("");
+  const [bankNumberPatch, setBankNumberPatch] = useState("");
+
+  const [dataUser, setDataUser] = useState([]);
+
+  useEffect(() => {
+    const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
+    Axios.get(urlGetBank, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          setNoDataBank("no bank account");
+        } else {
+          setDataBank(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
+    Axios.get(urlDataUser, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      console.log(res.data);
-      Cookies.set("bankName", res.data.bankName);
-      Cookies.set("bankNumber", res.data.bankNumber);
-      history.push("/profile");
+      setDataUser(res.data[0]);
+      Cookies.set("name", res.data[0].name);
     });
+  }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const url = "https://binar8-agus-saputra.nandaworks.com/users";
+    const bodyData = {
+      name: name,
+      email: email,
+      // password: password,
+    };
     Axios.patch(url, bodyData, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
@@ -63,6 +87,36 @@ const ProfileEdit = () => {
       Cookies.set("email", res.data.email);
       // Cookies.set("password", res.data.password)
       history.push("/profile");
+    });
+
+    const urlPostBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
+    const bodyDataBank = {
+      bankName: bankName,
+      bankNumber: bankNumber,
+    };
+    Axios.post(urlPostBank, bodyDataBank, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      console.log(res.data);
+      // Cookies.set("bankName", res.data.bankName);
+      // Cookies.set("bankNumber", res.data.bankNumber);
+      history.push("/profile");
+    });
+
+    const urlPatchBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
+    const bodyDataBankPatch = {
+      id: idBank,
+      bankName: bankNamePatch,
+      bankNumber: bankNumberPatch,
+    };
+    Axios.patch(urlPatchBank, bodyDataBankPatch, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }).then((res) => {
+      console.log(res.data);
     });
   };
 
@@ -76,12 +130,13 @@ const ProfileEdit = () => {
   //   } else {
   //     setErrorConfirmPassword("");
   //   }
+  // };
 
   return (
     <>
       <TopMenu />
       <Container>
-        <div className="border-container">
+        <div className="border-container" style={{ marginBottom: "70px" }}>
           <div style={{ margin: "30px" }}>
             <Row>
               <Col lg={6} className="d-flex justify-content-start">
@@ -93,12 +148,17 @@ const ProfileEdit = () => {
                 </Link>
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
-                <img src={imgProfile} alt="" />
+                {/* <img src={imgProfile} alt="" /> */}
+                {dataUser.photo === null ? (
+                  <Avatar name={dataUser.name} size="200" />
+                ) : (
+                  <img src={dataUser.photo} alt="" />
+                )}
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
-                <Link to="/profile/edit" className="style-edit-profile">
+                {/* <Link to="/profile/edit" className="style-edit-profile">
                   Change Image Profile
-                </Link>
+                </Link> */}
               </Col>
             </Row>
 
@@ -131,34 +191,51 @@ const ProfileEdit = () => {
                     />
                   </FormGroup>
                 </Col>
-                {/* <Col lg={6}>
-                  <FormGroup>
-                    <Label for="exampletext">Password</Label>
-                    <Input
-                      className="form-style"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col lg={6}>
-                  <FormGroup>
-                    <Label for="exampletext">Password</Label>
-                    <Input
-                      className="form-style"
-                      type="password"
-                      name="password"
-                      value={confirmPassword}
-                      onChange={checkConfirmPassword}
-                      placeholder="Confirm Password"
-                    />
-                    {errorConfirmPassword && (
-                      <p className="text-danger">{errorConfirmPassword}</p>
-                    )}
-                  </FormGroup>
-                </Col> */}
+              </Row>
+
+              {/* <Row className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setShow(true)}
+                  type="button"
+                  className="reset-password-btn"
+                >
+                  Reset password
+                </Button>
+              </Row>
+              <Hider state={show}>
+                <Row>
+                  <Col lg={6}>
+                    <FormGroup>
+                      <Label for="exampletext">Password</Label>
+                      <Input
+                        className="form-style"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col lg={6}>
+                    <FormGroup>
+                      <Label for="exampletext">Password</Label>
+                      <Input
+                        className="form-style"
+                        type="password"
+                        name="password"
+                        value={confirmPassword}
+                        onChange={checkConfirmPassword}
+                        placeholder="Confirm Password"
+                      />
+                      {errorConfirmPassword && (
+                        <p className="text-danger">{errorConfirmPassword}</p>
+                      )}
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </Hider> */}
+
+              <Row>
                 <Col lg={12}>
                   <p style={{ color: "#A87B14" }}>
                     We need your bank account for campaign purpose
@@ -166,31 +243,93 @@ const ProfileEdit = () => {
                 </Col>
                 <Col lg={6}>
                   <FormGroup>
-                    <Label for="exampletext">Bank Name</Label>
+                    <Label for="exampletext">Create Bank Name</Label>
                     <Input
                       className="form-style"
                       type="text"
                       name="text"
                       // placeholder={bankName}
-                      value={bankNameCookies}
+                      // value={bankNameCookies}
                       onChange={(e) => setBankName(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
                 <Col lg={6}>
                   <FormGroup>
-                    <Label for="exampletext">Bank Account Name</Label>
+                    <Label for="exampletext">Create Bank Number</Label>
                     <Input
                       className="form-style"
                       type="text"
                       name="text"
                       // placeholder={bankAccountName}
-                      value={bankNumberCookies}
+                      // value={bankNumberCookies}
                       onChange={(e) => setBankNumber(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
-                <Col className="d-flex justify-content-end">
+              </Row>
+
+              <Row className="d-flex justify-content-end mb-2">
+                <Button
+                  onClick={() => setShow(true)}
+                  type="button"
+                  className="reset-password-btn"
+                >
+                  Edit Bank Account
+                </Button>
+              </Row>
+
+              <Hider state={show}>
+                <Row>
+                  <Col lg={4}>
+                    <FormGroup>
+                      <Label for="exampletext">Select to change</Label>
+                      <Input
+                        className="form-style"
+                        type="select"
+                        name="select"
+                        id="exampleSelect"
+                        onChange={(e) => setIdBank(e.target.value)}
+                      >
+                        <option value="" selected disabled>
+                          Please select
+                        </option>
+                        {dataBank.map((dataBank) => (
+                          <option value={dataBank.id}>
+                            {dataBank.bankName}-{dataBank.bankNumber}
+                          </option>
+                        ))}
+                      </Input>
+                      <p>{noDataBank}</p>
+                    </FormGroup>
+                  </Col>
+                  <Col lg={4}>
+                    <FormGroup>
+                      <Label for="exampletext">Change Bank Name</Label>
+                      <Input
+                        className="form-style"
+                        type="text"
+                        name="text"
+                        onChange={(e) => setBankNamePatch(e.target.value)}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col lg={4}>
+                    <FormGroup>
+                      <Label for="exampletext">Change Bank Number</Label>
+                      <Input
+                        className="form-style"
+                        type="text"
+                        name="text"
+                        onChange={(e) => setBankNumberPatch(e.target.value)}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </Hider>
+
+              <Row>
+                <Col className="d-flex justify-content-end mt-5">
                   <Button
                     style={{
                       background: "#A43F3C",

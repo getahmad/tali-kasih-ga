@@ -15,10 +15,10 @@ const Footer = () => {
           </Col>
           <Col lg={2} xs={4}>
               <Link to="/" className="title-footer">FUNDRAISE FOR</Link><br/>
-              <Link to="/" className="list-footer">Education</Link><br/>
-              <Link to="/" className="list-footer">Disabilities</Link><br/>
-              <Link to="/" className="list-footer">Hospital Bills</Link><br/>
-              <Link to="/" className="list-footer">Religious</Link>
+              <Link to="/discover/Education" className="list-footer">Education</Link><br/>
+              <Link to="/discover/Disability" className="list-footer">Disabilities</Link><br/>
+              <Link to="/discover/Medical" className="list-footer">Hospital Bills</Link><br/>
+              <Link to="/discover/Religious" className="list-footer">Religious</Link>
           </Col>
           <Col lg={2} xs={4}>
               <Link to="/" className="title-footer">LEARN MORE</Link><br/>

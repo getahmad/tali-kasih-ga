@@ -3,6 +3,7 @@ import { Col, Row } from "reactstrap";
 import Carousel1 from "./images/carousel1.png";
 import Carousel2 from "./images/carousel2.png";
 import Carousel3 from "./images/carousel3.png";
+// import { checkLogin } from "../Helper";
 import "./CarouselHomepage.css";
 
 const CarouselHomepage = () => {
@@ -37,12 +38,24 @@ const CarouselHomepage = () => {
                   >
                     DONATE
                   </NavLink>
-                  <NavLink
-                    to="/campaign/create"
-                    className="nav-link nav-menu nav-campaign"
-                  >
-                    CREATE CAMPAIGN
-                  </NavLink>
+
+                  {/* {!checkLogin() && (
+                     <NavLink
+                     to="/"
+                     className="nav-link nav-menu nav-campaign"
+                   >
+                     CREATE CAMPAIGN
+                   </NavLink>
+                  )}
+
+                  {checkLogin() && ( */}
+                    <NavLink
+                      to="/campaign/create"
+                      className="nav-link nav-menu nav-campaign"
+                    >
+                      CREATE CAMPAIGN
+                    </NavLink>
+                  {/* )} */}
                 </div>
               </Col>
             </Row>
@@ -62,6 +75,7 @@ const CarouselHomepage = () => {
                   >
                     DONATE
                   </NavLink>
+
                   <NavLink
                     to="/campaign/create"
                     className="nav-link nav-menu nav-campaign"
