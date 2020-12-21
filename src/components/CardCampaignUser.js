@@ -25,7 +25,7 @@ import {
                 >
                   <Card className="card-style" key={data.campaignId}>
                     <CardImg
-                      style={{ maxHeight: "250px", minHeight: "230px" }}
+                      style={{ maxHeight: "250px", minHeight: "230px" ,objectFit:"cover" }}
                       top
                       width="100%"
                       src={data.headerPhoto}

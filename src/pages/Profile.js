@@ -21,7 +21,6 @@ import Avatar from "react-avatar";
 import CardCampaignUser from "../components/CardCampaignUser";
 
 const Profile = (props) => {
-
   const [data, setData] = useState([]);
   const [dataUser, setDataUser] = useState([]);
   const [dataBank, setDataBank] = useState([]);
@@ -54,7 +53,6 @@ const Profile = (props) => {
     }).then((res) => {
       setDataUser(res.data[0]);
       Cookies.set("name", res.data[0].name);
-
     });
 
     const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
@@ -75,7 +73,7 @@ const Profile = (props) => {
       });
 
     const urlGetDonate = `https://binar8-agus-saputra.nandaworks.com/donations/user`;
-    Axios.get(urlGetDonate,{
+    Axios.get(urlGetDonate, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
@@ -110,7 +108,15 @@ const Profile = (props) => {
                 {dataUser.photo === null ? (
                   <Avatar name={dataUser.name} size="200" />
                 ) : (
-                  <img src={dataUser.photo} alt="" style={{width:"200px",height:"200px", objectFit:"cover"}}/>
+                  <img
+                    src={dataUser.photo}
+                    alt=""
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
+                  />
                 )}
               </Col>
 
@@ -200,18 +206,13 @@ const Profile = (props) => {
           style={{ marginTop: "70px", marginBottom: "70px" }}
         >
           <div style={{ margin: "30px" }}>
-{/* <<<<<<< HEAD
-            <h3 className="style-profile-title">My Campaigns ({data.length})</h3>
-=======
             <h3 className="style-profile-title">
               My Campaigns ({data.length})
             </h3>
->>>>>>> home-discover-category-createcampaign */}
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
                 <p>{error}</p>
-                {/* <CardCampaign data={data} /> */}
-                <CardCampaignUser data={data}/>
+                <CardCampaignUser data={data} />
               </Col>
               <Col lg={12} className="d-flex justify-content-center mt-5">
                 <Button className="load-more">LOAD MORE</Button>
