@@ -20,6 +20,9 @@ const App = () => {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route exact path="/campaign/campaign-detail/:campaignId">
+            {/* <DetailCampaign/> */}
+          </Route>
           <Route exact path="/discover/:category">
             <DiscoverCategory />
           </Route>

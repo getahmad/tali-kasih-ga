@@ -18,20 +18,46 @@ import Loading from "../components/Loading";
 
 const Discover = (props) => {
   const [data, setData] = useState([]);
+  const [dataLess, setDataLess] = useState([]);
+  const [dataUrgent, setDataUrgent] = useState([]);
+  const [dataPopular, setDataPopular] = useState([]);
   const [loading, setLoading] = useState(false);
   const Category = ['Disability','Medical', 'Education', 'Religious','Humanity','Environment','Disaster','Sociopreneur']
 
   useEffect(() => {
     setLoading(true);
-    const url =
-      "https://binar8-agus-saputra.nandaworks.com/campaigns";
+    // const url="https://binar8-agus-saputra.nandaworks.com/homepage"
+    const url="https://binar8-agus-saputra.nandaworks.com/campaigns"
     axios
       .get(url)
       .then((res) => {
-        setData(res.data);
-        // console.log(res.data);
+        setData(res.data.reverse());
         setLoading(false);
       });
+
+      const urlDataUrgent="https://binar8-agus-saputra.nandaworks.com/campaigns/urgent"
+      axios
+      .get(urlDataUrgent)
+      .then((res)=>{
+        setDataUrgent(res.data)
+        setLoading(false);
+      })
+
+      const urlDataPopular="https://binar8-agus-saputra.nandaworks.com/campaigns/popular"
+      axios
+      .get(urlDataPopular)
+      .then((res)=>{
+        setDataPopular(res.data)
+        setLoading(false);
+      })
+
+      const urlDataLess="https://binar8-agus-saputra.nandaworks.com/campaigns/less/donate"
+      axios
+      .get(urlDataLess)
+      .then((res)=>{
+        setDataLess(res.data)
+        setLoading(false);
+      })
 
   
   }, []);
@@ -126,7 +152,31 @@ const Discover = (props) => {
         <Row>
           <Col className="d-flex justify-content-center">
             {loading && <Loading type="spokes" color="#1D94A8" />}
-            {!loading && <CardCampaign data={data} />}
+            {!loading && <CardCampaign data={data.slice(0,3)} />}
+          </Col>
+        </Row>
+
+        <h1 className="title-discover-all mt-2">Most Urgent  </h1>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            {loading && <Loading type="spokes" color="#1D94A8" />}
+            {!loading && <CardCampaign data={dataUrgent.slice(0,3)} />}
+          </Col>
+        </Row>
+
+        <h1 className="title-discover-all mt-2">Popular  </h1>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            {loading && <Loading type="spokes" color="#1D94A8" />}
+            {!loading && <CardCampaign data={dataPopular.slice(0,3)} />}
+          </Col>
+        </Row>
+
+        <h1 className="title-discover-all mt-2">Less Donate  </h1>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            {loading && <Loading type="spokes" color="#1D94A8" />}
+            {!loading && <CardCampaign data={dataLess.slice(0,3)} />}
           </Col>
         </Row>
       </Container>

@@ -39,7 +39,7 @@ const Register = () => {
         history.push("/login-proses");
       })
       .catch((err) => {
-        setErrorRegister("email already exists")
+        setErrorRegister("email already exists");
       });
   };
 
@@ -74,11 +74,7 @@ const Register = () => {
 
   return (
     <div>
-      <span
-        onClick={toggle}
-        // className="nav-link"
-        style={{ color: "#1D94A8" }}
-      >
+      <span onClick={toggle} style={{ color: "#1D94A8" }}>
         Register
       </span>
 
@@ -86,8 +82,12 @@ const Register = () => {
         <ModalBody className="modal-style">
           <Form className="form-modal" onSubmit={handleSubmit}>
             <h1 className="title-modal">Register</h1>
-            <p className="subtitle-modal d-flex justify-content-start" >
-              Already have an account? <NavLink to="/"> <Login  /> </NavLink>
+            <p className="subtitle-modal d-flex justify-content-start">
+              Already have an account?{" "}
+              <NavLink to="/">
+                {" "}
+                <Login />{" "}
+              </NavLink>
             </p>
             <FormGroup style={{ marginTop: "40px" }}>
               <Input

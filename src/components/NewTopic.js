@@ -11,11 +11,11 @@ const NewTopic = () => {
 
   useEffect(() => {
       setLoading(true)
-      const url = `https://binar8-agus-saputra.nandaworks.com/homepage`
+      // const url = `https://binar8-agus-saputra.nandaworks.com/homepage`
+      const url="https://binar8-agus-saputra.nandaworks.com/campaigns"
       Axios.get(url)
       .then((res)=>{
-        setData(res.data)
-        console.log(res.data)
+        setData(res.data.reverse());
         setLoading(false)
       })
   }, [])
@@ -28,7 +28,7 @@ const NewTopic = () => {
         <Row style={{ marginBottom: "70px" }}>
           <Col className="d-flex justify-content-center">
             {loading && <Loading type="spokes" color="#1D94A8" /> } 
-            {!loading && <CardCampaign data={data}/>}
+            {!loading && <CardCampaign data={data.slice(0,3)}/>}
           </Col>
         </Row>
       </Container>

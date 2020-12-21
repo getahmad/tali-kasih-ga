@@ -13,7 +13,6 @@ import Cookies from "js-cookie";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
 import Avatar from "react-avatar";
-// import imgProfile from "./images/profile.png";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import Hider from "react-hider";
@@ -32,6 +31,8 @@ const ProfileEdit = () => {
 
   const [bankName, setBankName] = useState("");
   const [bankNumber, setBankNumber] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+
   const history = useHistory();
 
   const [idBank, setIdBank] = useState("");
@@ -71,6 +72,21 @@ const ProfileEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let formdata = new FormData();
+    formdata.append("photo", profileImage);
+    const urlProfileImage =
+      "https://binar8-agus-saputra.nandaworks.com/users/photo";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-type": "multipart/form-data",
+      },
+    };
+    Axios.post(urlProfileImage, formdata, config).then((res) => {
+      console.log(res.data);
+      history.push("/profile");
+    });
+
     const url = "https://binar8-agus-saputra.nandaworks.com/users";
     const bodyData = {
       name: name,
@@ -87,6 +103,7 @@ const ProfileEdit = () => {
       Cookies.set("email", res.data.email);
       // Cookies.set("password", res.data.password)
       history.push("/profile");
+      
     });
 
     const urlPostBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
@@ -100,8 +117,6 @@ const ProfileEdit = () => {
       },
     }).then((res) => {
       console.log(res.data);
-      // Cookies.set("bankName", res.data.bankName);
-      // Cookies.set("bankNumber", res.data.bankNumber);
       history.push("/profile");
     });
 
@@ -148,17 +163,27 @@ const ProfileEdit = () => {
                 </Link>
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
-                {/* <img src={imgProfile} alt="" /> */}
                 {dataUser.photo === null ? (
                   <Avatar name={dataUser.name} size="200" />
                 ) : (
-                  <img src={dataUser.photo} alt="" />
+                  <img
+                    src={dataUser.photo}
+                    alt=""
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
+                  />
                 )}
               </Col>
-              <Col lg={12} className="d-flex justify-content-center">
-                {/* <Link to="/profile/edit" className="style-edit-profile">
-                  Change Image Profile
-                </Link> */}
+              <Col lg={12} className="d-flex justify-content-center mt-3">
+                <input
+                  style={{ width: "200px" }}
+                  type="file"
+                  name="profileImage"
+                  onChange={(e) => setProfileImage(e.target.files[0])}
+                />
               </Col>
             </Row>
 
@@ -331,6 +356,7 @@ const ProfileEdit = () => {
               <Row>
                 <Col className="d-flex justify-content-end mt-5">
                   <Button
+                    type="submit"
                     style={{
                       background: "#A43F3C",
                       color: "#ffffff",

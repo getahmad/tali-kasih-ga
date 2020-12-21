@@ -42,10 +42,7 @@ const Login = (props) => {
   return (
     <div>
       <span 
-        // href="#"
-        // to="/"
         onClick={toggle}
-        // className="nav-link "
         style={{ color: "#1D94A8" }}
       >
         Login
@@ -74,7 +71,7 @@ const Login = (props) => {
                 name="password"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
-                // required
+                required
               />
             </FormGroup>
             <NavLink to="/login-proses">
