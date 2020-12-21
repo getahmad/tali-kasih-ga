@@ -11,36 +11,40 @@ import {
 } from "reactstrap";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
-import imgProfile from "./images/profile.png";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./profile.css";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Loading from "../components/Loading";
-import CardCampaign from "../components/CardCampaign";
+// import CardCampaign from "../components/CardCampaign";
+import Avatar from "react-avatar";
+import CardCampaignUser from "../components/CardCampaignUser";
 
 const Profile = (props) => {
-  // const name = Cookies.get("name");
-  // const email = Cookies.get("email");
-  const bankName = Cookies.get("bankName");
-  const bankNumber = Cookies.get("bankNumber");
+
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [dataUser, setDataUser]= useState([])
+  const [dataUser, setDataUser] = useState([]);
+  const [dataBank, setDataBank] = useState([]);
+  const [noDataBank, setNoDataBank] = useState("");
+  const [error, setError] = useState("");
+  const [errorDonate, setErrorDonate] = useState("");
+  // const [idUser] = useState(Cookies.get("id"));
+  const [dataDonateUser, setDataDonateUser] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
     const url = "https://binar8-agus-saputra.nandaworks.com/campaigns/user";
     Axios.get(url, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-      setLoading(false);
-    });
+    })
+      .then((res) => {
+        setData(res.data.reverse());
+      })
+      .catch((err) => {
+        setError("No Data");
+        console.log(err);
+      });
 
     const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
     Axios.get(urlDataUser, {
@@ -48,26 +52,42 @@ const Profile = (props) => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      Cookies.set("name", res.data[0].name);
       setDataUser(res.data[0]);
-      console.log(res.data);
-      setLoading(false);
+      Cookies.set("name", res.data[0].name);
+
     });
 
+    const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
+    Axios.get(urlGetBank, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          setNoDataBank("no bank account");
+        } else {
+          setDataBank(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-
-
-    // const urlGetBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
-    // Axios.get(urlGetBank, {
-    //   headers: {
-    //     Authorization: `Bearer ${Cookies.get("token")}`,
-    //   },
-    // }).then((res) => {
-    //   setData(res.data);
-    //   Cookies.set("bankName", res.data.bankName);
-    //   Cookies.set("bankNumber", res.data.bankNumber);
-    //   console.log(res.data);
-    // });
+    const urlGetDonate = `https://binar8-agus-saputra.nandaworks.com/donations/user`;
+    Axios.get(urlGetDonate,{
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    })
+      .then((res) => {
+        setDataDonateUser(res.data);
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        setErrorDonate("No Data");
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -86,8 +106,14 @@ const Profile = (props) => {
                 </Link>
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
-                <img src={imgProfile} alt="" />
+                {/* <img src={ dataUser.photo === null? "https://i.postimg.cc/9MpKxPRQ/profile.png": dataUser.photo } alt=""/> */}
+                {dataUser.photo === null ? (
+                  <Avatar name={dataUser.name} size="200" />
+                ) : (
+                  <img src={dataUser.photo} alt="" style={{width:"200px",height:"200px", objectFit:"cover"}}/>
+                )}
               </Col>
+
               <Col lg={12} className="d-flex justify-content-center">
                 <Link to="/profile/edit" className="style-edit-profile">
                   Edit Profile
@@ -122,11 +148,20 @@ const Profile = (props) => {
                 <Col lg={6}>
                   <FormGroup>
                     <Label for="exampletext">Bank Info</Label>
-                    <Input
+                    {/* <Input
                       disabled
                       style={{ borderBottom: "none" }}
-                      value={`${bankName}-${bankNumber}`}
+                      value={`${dataBank.bankName}-${dataBank.bankNumber}`}
                     />
+                    <p>{noDataBank}</p> */}
+                    <Input type="select" name="select" id="exampleSelect">
+                      {dataBank.map((dataBank) => (
+                        <option value={dataBank.id}>
+                          {dataBank.bankName}-{dataBank.bankNumber}
+                        </option>
+                      ))}
+                    </Input>
+                    <p>{noDataBank}</p>
                   </FormGroup>
                 </Col>
               </Row>
@@ -136,80 +171,23 @@ const Profile = (props) => {
 
         <div className="border-container" style={{ marginTop: "70px" }}>
           <div style={{ margin: "30px" }}>
-            <h3 className="style-profile-title">My Donations (23)</h3>
-            <Row>
-              <Col lg={6}>
-                <Card className="card-donate" style={{ marginTop: "30px" }}>
-                  <div style={{ margin: "20px" }}>
-                    <p className="time-donate">12 minutes ago</p>
-                    <p className="title-donate">
-                      Aid for necessary items to help our country
-                    </p>
-                    <h1 className="amount-donate">Rp. 320.000</h1>
-                    <p className="story-donate">
-                      “Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Duis nunc pellentesque enim ultrices nunc. Pretium massa,
-                      vel viverra id mi sed sit. In faucibus leo etiam cras elit
-                      malesuada augue. In faucibus leo etiam cras elit malesuada
-                      augue “
-                    </p>
-                  </div>
-                </Card>
-              </Col>
-              <Col lg={6} style={{ marginTop: "30px" }}>
-                <Card className="card-donate">
-                  <div style={{ margin: "20px" }}>
-                    <p className="time-donate">12 minutes ago</p>
-                    <p className="title-donate">
-                      Aid for necessary items to help our country
-                    </p>
-                    <h1 className="amount-donate">Rp. 320.000</h1>
-                    <p className="story-donate">
-                      “Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Duis nunc pellentesque enim ultrices nunc. Pretium massa,
-                      vel viverra id mi sed sit. In faucibus leo etiam cras elit
-                      malesuada augue. In faucibus leo etiam cras elit malesuada
-                      augue “
-                    </p>
-                  </div>
-                </Card>
-              </Col>
-              <Col lg={6} style={{ marginTop: "30px" }}>
-                <Card className="card-donate">
-                  <div style={{ margin: "20px" }}>
-                    <p className="time-donate">12 minutes ago</p>
-                    <p className="title-donate">
-                      Aid for necessary items to help our country
-                    </p>
-                    <h1 className="amount-donate">Rp. 320.000</h1>
-                    <p className="story-donate">
-                      “Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Duis nunc pellentesque enim ultrices nunc. Pretium massa,
-                      vel viverra id mi sed sit. In faucibus leo etiam cras elit
-                      malesuada augue. In faucibus leo etiam cras elit malesuada
-                      augue “
-                    </p>
-                  </div>
-                </Card>
-              </Col>
-              <Col lg={6} style={{ marginTop: "30px" }}>
-                <Card className="card-donate">
-                  <div style={{ margin: "20px" }}>
-                    <p className="time-donate">12 minutes ago</p>
-                    <p className="title-donate">
-                      Aid for necessary items to help our country
-                    </p>
-                    <h1 className="amount-donate">Rp. 320.000</h1>
-                    <p className="story-donate">
-                      “Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Duis nunc pellentesque enim ultrices nunc. Pretium massa,
-                      vel viverra id mi sed sit. In faucibus leo etiam cras elit
-                      malesuada augue. In faucibus leo etiam cras elit malesuada
-                      augue “
-                    </p>
-                  </div>
-                </Card>
-              </Col>
+            <h3 className="style-profile-title">
+              My Donations ({dataDonateUser.length})
+            </h3>
+            <Row className="d-flex justify-content-center">
+              <p>{errorDonate}</p>
+              {dataDonateUser.map((DonateUser) => (
+                <Col lg={6}>
+                  <Card className="card-donate" style={{ marginTop: "30px" }}>
+                    <div style={{ margin: "20px" }}>
+                      <p className="time-donate">{DonateUser.createdAt}</p>
+                      <p className="title-donate">{DonateUser.campaignTitle}</p>
+                      <h1 className="amount-donate">Rp. {DonateUser.amount}</h1>
+                      <p className="story-donate">“{DonateUser.message}“</p>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
               <Col lg={12} className="d-flex justify-content-center mt-5">
                 <Button className="load-more">LOAD MORE</Button>
               </Col>
@@ -217,13 +195,23 @@ const Profile = (props) => {
           </div>
         </div>
 
-        <div className="border-container" style={{ marginTop: "70px" }}>
+        <div
+          className="border-container"
+          style={{ marginTop: "70px", marginBottom: "70px" }}
+        >
           <div style={{ margin: "30px" }}>
+{/* <<<<<<< HEAD
             <h3 className="style-profile-title">My Campaigns ({data.length})</h3>
+=======
+            <h3 className="style-profile-title">
+              My Campaigns ({data.length})
+            </h3>
+>>>>>>> home-discover-category-createcampaign */}
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
-                {loading && <Loading type="spokes" color="#1D94A8" />}
-                {!loading && <CardCampaign data={data} />}
+                <p>{error}</p>
+                {/* <CardCampaign data={data} /> */}
+                <CardCampaignUser data={data}/>
               </Col>
               <Col lg={12} className="d-flex justify-content-center mt-5">
                 <Button className="load-more">LOAD MORE</Button>

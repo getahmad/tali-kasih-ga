@@ -5,17 +5,24 @@ import DiscoverCategory from "./pages/DiscoverCategory";
 import SearchResult from "./pages/SearchResult";
 import LoginProses from "./components/LoginProses";
 import CreateCampaign from "./pages/CreateCampaign";
-import Logout from "./components/Logout"
-// import { checkLogin, checkAdmin } from "./Helper";
+import Logout from "./components/Logout";
+import { checkLogin } from "./Helper";
 import "./App.css";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
     <>
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/campaign/campaign-detail/:campaignId">
+            {/* <DetailCampaign/> */}
+          </Route>
           <Route exact path="/discover/:category">
             <DiscoverCategory />
           </Route>
@@ -29,21 +36,22 @@ const App = () => {
             <LoginProses />
           </Route>
           <Route exact path="/logout">
-            <Logout/>
+            <Logout />
           </Route>
           <Route exact path="/campaign/create">
-            <CreateCampaign />
+            {!checkLogin() && <LoginProses />}
+            {checkLogin() && <CreateCampaign />}
           </Route>
           <Route exact path="/profile/edit">
-            <ProfileEdit/>
+            {checkLogin() && <ProfileEdit />}
+            {!checkLogin()&& <NotFound/>}
           </Route>
           <Route exact path="/profile">
-            <Profile/>
+            {checkLogin() && <Profile />}
+            {!checkLogin()&& <NotFound/>}
           </Route>
-          {/* {checkLogin() && <></>}
-          {checkAdmin() && <></>} */}
-          <Route exact path="/">
-            <Home />
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
       </Router>

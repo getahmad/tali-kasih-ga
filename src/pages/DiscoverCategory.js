@@ -13,7 +13,6 @@ import Footer from "./layout/Footer";
 import JumbotronCategory from "../components/JumbotronCategory";
 import CardCampaign from "../components/CardCampaign";
 import ICSort from "./images/ic_sort.png";
-import Pagination from "react-js-pagination";
 import "./discovercategory.css";
 import axios from "axios";
 import Loading from "../components/Loading";
@@ -26,19 +25,49 @@ const DiscoverCategory = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  let {category} = useParams();
+  let { category } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    const url =`https://binar8-agus-saputra.nandaworks.com/campaigns/category?category=${category}`;
-    axios
-      .get(url)
-      .then((res) => {
-        setData(res.data);
-        // console.log(res.data);
-        setLoading(false);
-      });
+    const url = `https://binar8-agus-saputra.nandaworks.com/campaigns/category?category=${category}`;
+    axios.get(url).then((res) => {
+      setData(res.data.reverse());
+      setLoading(false);
+    });
   }, [category]);
+
+  const sortNewest = (e) => {
+    const url = `https://binar8-agus-saputra.nandaworks.com/campaigns/category?category=${category}`;
+    axios.get(url).then((res) => {
+      setData(res.data.reverse());
+      setLoading(false);
+    });
+  };
+
+  const sortUrgent = (e) => {
+    e.preventDefault();
+    const urlDataUrgent =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/urgent";
+    axios.get(urlDataUrgent).then((res) => {
+      setData(res.data.filter((data) => data.category === category));
+    });
+  };
+  const sortLessDonate = (e) => {
+    e.preventDefault();
+    const urlDataLess =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/less/donate";
+    axios.get(urlDataLess).then((res) => {
+      setData(res.data.filter((data) => data.category === category));
+    });
+  };
+  const sortPopular = (e) => {
+    e.preventDefault();
+    const urlDataPupular =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/popular";
+    axios.get(urlDataPupular).then((res) => {
+      setData(res.data.filter((data) => data.category === category));
+    });
+  };
 
   return (
     <>
@@ -61,10 +90,12 @@ const DiscoverCategory = () => {
               <DropdownMenu
                 style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
               >
-                <DropdownItem>Newest</DropdownItem>
-                <DropdownItem>Most urgent</DropdownItem>
-                <DropdownItem>Popular</DropdownItem>
-                <DropdownItem>Less donation</DropdownItem>
+                <DropdownItem onClick={sortNewest}>Newest</DropdownItem>
+                <DropdownItem onClick={sortUrgent}>Most urgent</DropdownItem>
+                <DropdownItem onClick={sortPopular}>Popular</DropdownItem>
+                <DropdownItem onClick={sortLessDonate}>
+                  Less donation
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </Col>
@@ -76,22 +107,6 @@ const DiscoverCategory = () => {
               {loading && <Loading type="spokes" color="#1D94A8" />}
               {!loading && <CardCampaign data={data} />}
             </Col>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col className="d-flex justify-content-end">
-            <Pagination
-              activePage={1}
-              totalItemsCount={10}
-              onChange={2}
-              itemsCountPerPage={10}
-              innerClass="pagination pagination-sm"
-              prevPageText="Previous"
-              nextPageText="Next"
-              itemClass="page-item"
-              linkClass="page-link"
-            />
           </Col>
         </Row>
       </Container>

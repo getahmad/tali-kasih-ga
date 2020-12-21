@@ -53,3 +53,8 @@
     text-decoration: none;
     background-color: cornflowerblue;
 }
+
+
+.progress-bar{
+    background-color: #1D94A8 !important;
+}

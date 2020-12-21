@@ -11,11 +11,11 @@ const NewTopic = () => {
 
   useEffect(() => {
       setLoading(true)
-      const url = `https://binar8-agus-saputra.nandaworks.com/homepage`
+      // const url = `https://binar8-agus-saputra.nandaworks.com/homepage`
+      const url="https://binar8-agus-saputra.nandaworks.com/campaigns"
       Axios.get(url)
       .then((res)=>{
-        setData(res.data)
-        console.log(res.data)
+        setData(res.data.reverse());
         setLoading(false)
       })
   }, [])

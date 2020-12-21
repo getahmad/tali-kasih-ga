@@ -37,6 +37,7 @@ const CarouselHomepage = () => {
                   >
                     DONATE
                   </NavLink>
+
                   <NavLink
                     to="/campaign/create"
                     className="nav-link nav-menu nav-campaign"
@@ -62,8 +63,9 @@ const CarouselHomepage = () => {
                   >
                     DONATE
                   </NavLink>
+
                   <NavLink
-                    to="/campaign"
+                    to="/campaign/create"
                     className="nav-link nav-menu nav-campaign"
                   >
                     CREATE CAMPAIGN

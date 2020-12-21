@@ -1,13 +1,13 @@
 // import React, { useEffect } from "react";
-import { Link, useParams,  } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Jumbotron, Container, Row, Col } from "reactstrap";
 import ImgDiscCategory from "./images/discover-category.png";
 import "font-awesome/css/font-awesome.min.css";
 import "./jumbotroncategory.css";
 
 const JumbotronCategory = (props) => {
-  let {category} = useParams()
 
+  let {category} = useParams();
   return (
     <div style={{ marginTop: "70px" }}>
       <Jumbotron

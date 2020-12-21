@@ -3,15 +3,15 @@ import {
   Col,
   Container,
   Row,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  // Dropdown,
+  // DropdownToggle,
+  // DropdownMenu,
+  // DropdownItem,
 } from "reactstrap";
 import TopMenu from "./layout/TopMenu";
 import Footer from "./layout/Footer";
 import CardCampaign from "../components/CardCampaign";
-import ICSort from "./images/ic_sort.png";
+// import ICSort from "./images/ic_sort.png";
 import { Link, useParams } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
 import Axios from "axios";
@@ -19,8 +19,8 @@ import Loading from "../components/Loading";
 
 
 const SearchResult = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const[data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -52,7 +52,7 @@ const SearchResult = () => {
 
       <Container style={{marginTop:"70px"}}>
         <Row>
-          <Col>
+          {/* <Col>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
               <DropdownToggle
                 style={{
@@ -73,7 +73,7 @@ const SearchResult = () => {
                 <DropdownItem>Less donation</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-          </Col>
+          </Col> */}
         </Row>
         <Row className="mt-5 mb-5">
           <Col className="d-flex justify-content-center">
