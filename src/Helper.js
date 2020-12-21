@@ -9,7 +9,7 @@ export function checkLogin() {
 }
 
 export function checkAdmin() {
-  if (Cookies.get("isAdmin") === "true") {
+  if (Cookies.get("isAdmin") === "1") {
     return true;
   } else {
     return false;

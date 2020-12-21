@@ -32,6 +32,7 @@ const Login = (props) => {
         Cookies.set("name", res.data.name);
         Cookies.set("email", res.data.email);
         Cookies.set("token", res.data.token);
+        Cookies.set("isAdmin",res.data.isAdmin);
         history.push("/login-proses");
       })
       .catch((err) => {

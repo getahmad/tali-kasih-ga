@@ -6,11 +6,12 @@ import SearchResult from "./pages/SearchResult";
 import LoginProses from "./components/LoginProses";
 import CreateCampaign from "./pages/CreateCampaign";
 import Logout from "./components/Logout";
-import { checkLogin } from "./Helper";
+import { checkLogin,checkAdmin } from "./Helper";
 import "./App.css";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
 
 const App = () => {
   return (
@@ -37,6 +38,10 @@ const App = () => {
           </Route>
           <Route exact path="/logout">
             <Logout />
+          </Route>
+          <Route exact path="/admin">
+          {!checkAdmin() && <NotFound/>}
+          {checkAdmin() && <Admin/>}            
           </Route>
           <Route exact path="/campaign/create">
             {!checkLogin() && <LoginProses />}

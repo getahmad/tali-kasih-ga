@@ -10,6 +10,7 @@ const Logout=()=>{
     Cookies.remove("email")
     Cookies.remove("bankName")
     Cookies.remove("bankNumber")
+    Cookies.remove("isAdmin")
     history.push("/")
     return null
 }
