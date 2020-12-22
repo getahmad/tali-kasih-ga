@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { Form, FormGroup, Input, Modal, ModalBody, Button } from "reactstrap";
+import { Form, FormGroup, Input, Modal, ModalBody, Button, Spinner } from "reactstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ICgoogle from "./images/ic-google.png";
@@ -18,9 +18,12 @@ const Register = () => {
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
   const [errorRegister, setErrorRegister] = useState("");
 
+  const [loading, setLoading] = useState(false)
+
   let history = useHistory();
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const url = "https://binar8-agus-saputra.nandaworks.com/auth/register";
     const bodyData = {
@@ -37,9 +40,11 @@ const Register = () => {
         Cookies.set("email", res.data.email);
         Cookies.set("token", res.data.token);
         history.push("/login-proses");
+        setLoading(false)
       })
       .catch((err) => {
         setErrorRegister("email already exists");
+        setLoading(false)
       });
   };
 
@@ -143,8 +148,9 @@ const Register = () => {
                 </p>
               )}
             </FormGroup>
-
-            <Button className="btn-login">LOGIN</Button>
+            <Button className="btn-login">
+              {loading? <Spinner color="light" /> : "LOGIN" } 
+            </Button>
             <p style={{ textAlign: "center", color: "red" }}>{errorRegister}</p>
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />

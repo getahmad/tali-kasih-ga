@@ -7,6 +7,7 @@ import {
   Label,
   Input,
   Button,
+  Spinner
 } from "reactstrap";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
@@ -18,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import Axios from "axios";
 import ICPlus from "./images/ic-plus.png";
+// import Loading from "../components/Loading";
 
 const CreateCampaign = (props) => {
   const [headerPhoto, setHeaderPhoto] = useState({ preview: "", raw: "" });
@@ -29,6 +31,7 @@ const CreateCampaign = (props) => {
   const [dueDate, setDueDate] = useState(null);
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const urlCategory = "https://binar8-agus-saputra.nandaworks.com/categories";
@@ -60,6 +63,7 @@ const CreateCampaign = (props) => {
   };
 
   const handleSubmit = (e) => {
+     setLoading(true)
     e.preventDefault();
     let formdata = new FormData();
     formdata.append("header", headerPhoto.raw);
@@ -81,9 +85,11 @@ const CreateCampaign = (props) => {
       .then((res) => {
         console.log(res.data);
         history.push("/discover");
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false)
       });
   };
 
@@ -253,10 +259,10 @@ const CreateCampaign = (props) => {
             <Row>
               <Col className="d-flex justify-content-end">
                 <Button className="btn-create-campaign" type="submit">
-                  CREATE CAMPAIGN
+                   {loading? <Spinner color="light" /> : "CREATE CAMPAIGN" }
                 </Button>
               </Col>
-            </Row>
+            </Row>            
           </Form>
         </div>
       </Container>
