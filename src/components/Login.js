@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { Form, FormGroup, Input, Modal, ModalBody, Button } from "reactstrap";
+import { Form, FormGroup, Input, Modal, ModalBody, Button, Spinner } from "reactstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ICgoogle from "./images/ic-google.png";
@@ -15,9 +15,12 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
+  const [loading, setLoading] = useState(false)
+
   let history = useHistory();
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     const url = "https://binar8-agus-saputra.nandaworks.com/auth/login";
     const bodyData = {
@@ -34,9 +37,11 @@ const Login = (props) => {
         Cookies.set("token", res.data.token);
         Cookies.set("isAdmin",res.data.isAdmin);
         history.push("/login-proses");
+        setLoading(false)
       })
       .catch((err) => {
         setErrorLogin("Email and password do not match");
+        setLoading(false)
       });
   };
 
@@ -78,8 +83,10 @@ const Login = (props) => {
             <NavLink to="/login-proses">
               <p className="subtitle-modal">forgot password?</p>
             </NavLink>
-
-            <Button className="btn-login" type="submit">LOGIN</Button>
+        
+            <Button className="btn-login" type="submit">
+            {loading? <Spinner color="light" /> : "LOGIN" }            
+            </Button>
             <p style={{ textAlign: "center", color: "red" }}>{errorLogin}</p>
 
             <div className="login-google d-flex justify-content-center">
