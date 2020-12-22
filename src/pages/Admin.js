@@ -10,6 +10,7 @@ const Admin = () => {
       <TopMenu />
       <Container className="container-admin">
        <h1>ini halaman admin</h1>
+       <h1>test deploy</h1>
       </Container>
       <Footer />
     </>
