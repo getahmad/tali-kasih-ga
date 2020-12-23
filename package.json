@@ -19,6 +19,8 @@
     "react-images-upload": "^1.2.8",
     "react-js-pagination": "^3.0.3",
     "react-loading": "^2.0.3",
+    "react-event-timeline": "^1.6.3",
+    "react-read-more-read-less": "^1.0.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-share": "^4.3.1",

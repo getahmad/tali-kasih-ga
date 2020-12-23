@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
+import CampaignDetail from "./pages/CampaignDetail"
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
             <Home />
           </Route>
           <Route exact path="/campaign/campaign-detail/:campaignId">
-            {/* <DetailCampaign/> */}
+            <CampaignDetail/>
           </Route>
           <Route exact path="/discover/:category">
             <DiscoverCategory />
