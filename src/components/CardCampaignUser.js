@@ -20,7 +20,7 @@ import {
             <>
               <Col lg={6} xs={6} style={{ marginBottom: "30px" }}>
                 <Link
-                  to={`/campaign/campaign-detail/${data.campaignId}`}
+                  to={`/campaign/campaign-detail/fundraiser/${data.campaignId}`}
                   className="link-card"
                 >
                   <Card className="card-style" key={data.campaignId}>

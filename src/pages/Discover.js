@@ -26,7 +26,6 @@ const Discover = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    // const url="https://binar8-agus-saputra.nandaworks.com/homepage"
     const url="https://binar8-agus-saputra.nandaworks.com/campaigns"
     axios
       .get(url)

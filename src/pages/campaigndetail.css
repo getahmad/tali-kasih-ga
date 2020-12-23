@@ -1,9 +1,15 @@
 .campaign-detail-title{
-    margin-top: 6em;
+    /* margin-top: 6em; */
 }
 
 .campaign-detail-title h4{
-    text-transform: uppercase;
+    margin-top: 125px;
+    margin-bottom: 30px;
+    /* text-transform: uppercase; */
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 49px;
+    color: #000000;
 }
 
 .campaign-detail-info .progress-value .progress-bar{
@@ -76,6 +82,7 @@
     font-size: 24px;
     margin-bottom: 15px;
     color: #000;
+    font-weight: bold;
 }
 
 .campaign-donations .content-donations .user-donation{
@@ -109,7 +116,6 @@
 .campaign-donations .content-donations .load-more-donator{
     padding: 5px 50px;
 }
-
 
 .donator-comments textarea{
     width: 100%;
@@ -148,6 +154,8 @@
     font-size: 24px;
     margin-bottom: 15px;
     color: #000;
+    font-weight: bold;
+
 }
 
 .read-more-less--more, .read-more-less--less{
@@ -159,3 +167,21 @@
     margin: 0; padding: 30px 0; 
 }
 
+.donate-campaign-button a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.donate-campaign-button a:hover{
+    text-decoration: none;
+    color: #fff;
+}
+
+.background-biru-related{
+    background: linear-gradient(359.64deg, #F2F9FA 0.23%, rgba(242, 249, 250, 0) 99.61%);
+}
+
+
+.btn-detail-style{
+    background: #A43F3C !important;
+}
