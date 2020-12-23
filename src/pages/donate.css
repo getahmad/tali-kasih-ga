@@ -1,0 +1,41 @@
+.donation-form{
+    margin-top: 6em;
+}
+
+/* input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.payment-bank{
+    background: #FFFFFF;
+    border: 1px solid #E1E0E0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 150px;
+    padding: 10px 15px;
+}
+
+.transfer-to{
+    background-color: #F4F4F4;
+}
+
+.transfer-to-text{
+    color:  #1D94A8;
+    font-size: 24px;
+}
+
+.transfer-to-info{
+    color: #9F9F9F;
+}
+
+.transfer-to input{
+    border: none;
+}
