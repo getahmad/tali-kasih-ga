@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import TopMenu from "./layout/TopMenu";
 import Footer from "./layout/Footer";
 import bankTransferImg from "../components/images/donation-bank.png";
@@ -21,58 +21,122 @@ Input,
 } from "reactstrap";
 import Medical from "../components/images/medical.png";
 import "./donate.css";
+import Axios from "axios";
+import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+import NumberFormat from 'react-number-format';
+
+
 
 
 const Donate=()=>{
+
+
     const accountNumber = "1234 5678 90";
     const accountHolder = "Tali Kasih";
-    const transferAmount = "20000000";
+    const [amount, setAmount] = useState(0)
+    const[thisCampaign, setThisCampaign] = useState([])
+    let[donatorName, setDonatorName] = useState("")
+    const[donatorMessage, setDonatorMessage] = useState("")
+    const [checked, setChecked] = useState(false)
+    const userToken = Cookies.get(`token`)
+    let {campaignId} = useParams()
+    // let {donationId} = useParams()
+ 
+    const handleCheckedBox = () => setChecked(!checked)
+
+    // get campaign
+    useEffect(()=>{
+        Axios
+        .get(`https://binar8-agus-saputra.nandaworks.com/campaigns?campaigns.id=${campaignId}`)
+        .then((response)=>{
+            console.log(response.data)
+            // console.log(typeof response.data)
+            setThisCampaign(response.data[0])
+        })
+    },[campaignId])
+
+
+    // post donation
+    const submitDonation = (e)=>{
+        e.preventDefault();
+        const urlPost = `https://binar8-agus-saputra.nandaworks.com/donations`
+        // const urlPhoto= `https://binar8-agus-saputra.nandaworks.com/donations/photo?id=a5ad1b3b-b094-48cd-982e-1841209ada6d`
+        const postDonate= {
+            campaignId: campaignId,
+            amount: parseInt(amount),
+            name: donatorName,
+            message: donatorMessage
+        }
+        Axios
+        .post(urlPost, postDonate,{
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        })
+        .then(response => {
+            console.log(response.data)
+            
+        })
+        
+    }
+
+        if (checked === true) {
+            donatorName = document.getElementById('donation-anonim').value;
+            console.log("check")
+            console.log(donatorName);
+        } else {
+            console.log("uncheck")
+        }
+  
+
 
     return(
         <>
             <TopMenu/>
                 <div className="container donation-form">
-                    <Form className="w-100 mb-5">
+                    <Form  onSubmit={submitDonation} className="w-100 mb-5">
                         <h4 className="title-in-donation" >Donation</h4>
                         <hr/>
                         <div className="row">
                             <div className="col">
                                 <FormGroup>
                                     <Label for="donation-amount">Amount</Label>
-                                    <Input type="number" min="0" max="999999999999999999" name="total-amount" id="donation-amount" placeholder="Total Amount" />
+                                    <Input type="number" min="0" max="999999999999999999" name="total-amount" id="donation-amount" onChange={(e)=>setAmount(e.target.value)} placeholder="0" />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="donation-donator">Name</Label>
-                                    <Input type="text" name="total-amount" id="donation-donator" placeholder="Name" />
+                                    <Input type="text" name="total-amount" id="donation-donator" placeholder="Name" onChange={(e)=>setDonatorName(e.target.value)} />
                                     <FormGroup check>
                                     <Label check>
-                                    <Input type="checkbox" />
+                                    
+                                    <Input type="checkbox" id="donation-anonim" value="anonim"  checked={checked} onClick={handleCheckedBox} />
                                     Anonymous
                                     </Label>
                                 </FormGroup>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="donation-message">Message</Label>
-                                    <Input type="textarea" name="text" id="donation-message" />
+                                    <Input type="textarea" name="text" id="donation-message" onChange={(e)=>setDonatorMessage(e.target.value)}/>
                                 </FormGroup>
                             </div>
                             <div className="col">
                                 <Card className="card-style">
-                                    <CardImg top width="100%" src={Medical} alt="Card image cap" />
+                                    <CardImg top width="100%" src={thisCampaign.headerPhoto} alt="Card image cap" />
                                     <CardBody>
-                                        <button className="subcategory ">Medical</button>
+                                        <button className="subcategory ">{thisCampaign.category}</button>
                                         <CardTitle className="card-title">
-                                        Aid for necessary items to help our country
+                                        {thisCampaign.title}
                                         </CardTitle>
                                         <CardSubtitle className="card-subtitle">
-                                        Aksi Cepat Tanggap
+                                        {thisCampaign.name}
                                         </CardSubtitle>
-                                        <Progress className="progress-value" value={75} max={100} />
+                                        <Progress className="progress-value" value={thisCampaign.raised} max={thisCampaign.goal} />
                                         <CardText>
                                         <Row>
                                             <Col>
                                             <p className="info-text">Raised</p>
-                                            <p className="info-amount">IDR 30.000.000</p>
+                                            <p className="info-amount">{thisCampaign.raised}</p>
                                             </Col>
                                             <Col>
                                             <p style={{ textAlign: "right" }} className="info-text">
@@ -85,7 +149,7 @@ const Donate=()=>{
                                                 color: "black",
                                                 }}
                                             >
-                                                IDR 50.000.000
+                                                IDR {thisCampaign.goal}
                                             </p>
                                             </Col>
                                         </Row>
@@ -128,18 +192,23 @@ const Donate=()=>{
                                     <div className="row mt-3">
                                         <div className="transfer-to-info col-12">Total Amount</div>
                                         <div className="col-6 mt-1">
-                                            <input type="text" id="transfer-total-amount" name="transfer-total-amount" value={transferAmount} disabled/>
+                                            IDR <input type="number" id="transfer-total-amount" name="transfer-total-amount" value={amount} disabled/>
                                         </div>
                                         <div className="col-6 text-right">
-                                        <CopyToClipboard text={transferAmount}>
+                                        <CopyToClipboard text={amount}>
                                             <Button className="btn btn-light">copy</Button>
                                         </CopyToClipboard>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-6 p-4 mt-4">
+                                    <p className="transfer-to-text">Upload Transfer</p>
+                                    Select image to upload: <br/>
+                                    <input type="file" name="transferUpload" id="transferUpload"></input>
+                                </div>
                             </FormGroup>
                             <div className="text-right ">
-                                <Button  className="btn-detail-style">Submit</Button>
+                                <Button  className="btn-detail-style" type="submit">Submit</Button>
                             </div>
                         </div>                          
                     </Form>
@@ -147,6 +216,7 @@ const Donate=()=>{
             <Footer/>
         </>
     )
+
 }
 
 export default Donate;

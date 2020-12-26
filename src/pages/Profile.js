@@ -17,7 +17,7 @@ import "./profile.css";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 // import CardCampaign from "../components/CardCampaign";
-import Avatar from "react-avatar";
+import Avatar from "react-avatar"
 import CardCampaignUser from "../components/CardCampaignUser";
 
 const Profile = (props) => {

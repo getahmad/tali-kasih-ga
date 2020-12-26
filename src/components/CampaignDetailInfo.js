@@ -16,6 +16,7 @@ import {
   Input,
 } from "reactstrap";
 import Axios from "axios";
+import CampaignDetail from "../pages/CampaignDetail";
 
 const CampaignDetailInfo = () => {
   const [campaignDetail, setCampaignDetail] = useState([]);
@@ -26,6 +27,20 @@ const CampaignDetailInfo = () => {
   const toggle = () => setModal(!modal);
 
   const urlNowWeb = window.location.href;
+
+  const targetTime = new Date(campaignDetail.dueDate).getTime();
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  const timeBetween = targetTime - currentTime;
+  const days = Math.floor(timeBetween / (1000 * 60 * 60 * 24));
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     Axios.get(
@@ -83,7 +98,7 @@ const CampaignDetailInfo = () => {
                       <p className="campaign-donation-info-number">
                         {campaignDetail.dueDate == null
                           ? 10
-                          : campaignDetail.dueDate}
+                          : days}
                       </p>
                       <p className="campaign-donation-info-detail">Days left</p>
                     </CardText>
