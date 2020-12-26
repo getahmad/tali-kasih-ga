@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
@@ -16,8 +17,9 @@ import CampaignDetail from "./pages/CampaignDetail";
 import CampaignDetailFundraiser from "./pages/CampaignDetailFundraiser";
 import CampaignDonate from "./pages/Donate";
 import NotFoundMustLogin from "./pages/NotFoundMustLogin";
+import './App.css';
 
-const App = () => {
+function App() {
   return (
     <>
       <Router>
@@ -74,6 +76,6 @@ const App = () => {
       </Router>
     </>
   );
-};
+}
 
 export default App;
