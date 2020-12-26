@@ -11,7 +11,7 @@ import { checkLogin, checkAdmin } from "./Helper";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin";
+// import Admin from "./pages/Admin";
 import CampaignDetail from "./pages/CampaignDetail";
 import CampaignDetailFundraiser from "./pages/CampaignDetailFundraiser";
 import CampaignDonate from "./pages/Donate";
@@ -42,7 +42,7 @@ function App() {
           </Route>
           <Route exact path="/admin">
             {!checkAdmin() && <NotFound />}
-            {checkAdmin() && <Admin />}
+            {/* {checkAdmin() && <Admin />} */}
           </Route>
           <Route exact path="/campaign/create">
             {!checkLogin() && <NotFoundMustLogin />}
