@@ -50,6 +50,15 @@ const CampaignDetailInfo = () => {
       setCampaignDetail(response.data[0]);
     });
   }, [campaignId]);
+
+
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat('id-ID',
+      { minimumFractionDigits: 0 }
+    ).format(money);
+ }
+
   return (
     <div>
       <div className="campaign-detail-title">
@@ -71,10 +80,10 @@ const CampaignDetailInfo = () => {
               <CardText>
                 <p className="total-donation">
                   IDR
-                  {campaignDetail.raised == null ? 0 : campaignDetail.raised}
+                  {campaignDetail.raised == null ? 0 : formatRupiah(campaignDetail.raised)}
                 </p>
                 <p className="target-donation">
-                  from IDR {campaignDetail.goal}
+                  from IDR {formatRupiah(campaignDetail.goal)}
                 </p>
               </CardText>
               <Progress

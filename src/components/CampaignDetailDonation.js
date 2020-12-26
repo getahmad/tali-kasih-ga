@@ -3,6 +3,7 @@ import ICampaignDetailDonator from "./images/campaign-donator.png";
 import { Button } from "reactstrap";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
+import dateFormat from "dateformat";
 
 const CampaignDetailDonation = () => {
   const [campaignDonation, setCampaignDonation] = useState([]);
@@ -37,7 +38,7 @@ const CampaignDetailDonation = () => {
                       </p>
                       <p className="user-name">{campaignDonation.name}</p>
                       <p className="donate-time">
-                        {campaignDonation.createdAt}
+                        {dateFormat(campaignDonation.createdAt)}
                       </p>
                     </div>
                   </div>

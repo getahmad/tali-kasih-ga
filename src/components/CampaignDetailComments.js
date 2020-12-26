@@ -4,6 +4,7 @@ import ICampaignDetailDonator from "./images/campaign-donator.png";
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import Cookies from "js-cookie";
+import dateFormat from "dateformat";
 
 
 const CampaignDetailComments = () => {
@@ -77,7 +78,7 @@ const CampaignDetailComments = () => {
                                         </div>
                                         <div className="user-info px-3" lg={10}>
                                             {/* <p className="user-name"></p> */}
-                                            <p className="comments-time">{comment.createdAt}</p>
+                                            <p className="comments-time"> {dateFormat(comment.createdAt)}</p>
                                         </div>
                                     </div>
                                     <div className="comment-content mt-3">

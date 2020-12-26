@@ -48,7 +48,25 @@ const CampaignDetailFundraiserInfo =()=>{
 
     // delete campaign
     // end of delete campaign
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID',
+          { minimumFractionDigits: 0 }
+        ).format(money);
+     }
 
+       const targetTime = new Date(campaignDetail.dueDate).getTime();
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  const timeBetween = targetTime - currentTime;
+  const days = Math.floor(timeBetween / (1000 * 60 * 60 * 24));
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
     
     return(
     <div>
@@ -79,8 +97,8 @@ const CampaignDetailFundraiserInfo =()=>{
                 <Card className="campaign-detail-info">
                     <CardBody>
                         <CardText>
-                            <p className="total-donation">IDR {campaignDetail.raised == null? 0 : campaignDetail.raised}</p>
-                            <p className="target-donation">from IDR {campaignDetail.goal}</p>
+                            <p className="total-donation">IDR {campaignDetail.raised == null? 0 : formatRupiah(campaignDetail.raised)}</p>
+                            <p className="target-donation">from IDR {formatRupiah(campaignDetail.goal)}</p>
                         </CardText>
                         <Progress className="progress-value" value={campaignDetail.raised} max={campaignDetail.goal} />
                         <div className="row">
@@ -96,7 +114,7 @@ const CampaignDetailFundraiserInfo =()=>{
                             <div className="col campaign-donation-info">
                                 <Card>
                                     <CardText>
-                                        <p className="campaign-donation-info-number">{campaignDetail.dueDate == null? 10 : campaignDetail.dueDate }</p>
+                                        <p className="campaign-donation-info-number">{campaignDetail.dueDate == null? 10 : days}</p>
                                         <p className="campaign-donation-info-detail">Days left</p>
                                     </CardText>
                                 </Card>
