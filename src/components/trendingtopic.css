@@ -1,0 +1,69 @@
+.trending{
+    background: linear-gradient(180deg, #F1EDE4 0%, rgba(241, 237, 228, 0) 100%);
+    padding-top: 72px;
+    margin-top: -3px;
+}
+
+.img-trending{
+    width: 100%;
+    height: 100%;
+}
+
+.title{
+    font-size: 24px;
+    color: #A43F3C;
+}
+
+.subtitle{
+    font-size: 32px;
+    color: #2F243A ;
+    margin-bottom: 24px;
+    font-weight: bold;
+}
+
+.desc-trending{
+    font-size: 22px;
+    line-height: 40px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.petik-2{
+    float: right;
+    transform: scaleY(-1) scaleX(-1) ;
+}
+
+.name-user{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.as-user{
+    font-size: 16px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .title{
+        margin-top: -20px;
+    }
+    .subtitle{
+        font-size: 24px;
+    }
+    .desc-trending{
+        font-size: 20px;
+        line-height: 30px;
+    }
+    .petik-1{
+        width: 20px;
+      }
+    .petik-2{
+      width: 20px;
+    }
+    .name-user{
+     margin-top: -40px;   
+    }
+    .ava-trending{
+        margin-top: -40px;  
+    }
+}
