@@ -8,7 +8,6 @@ import LoginProses from "./components/LoginProses";
 import CreateCampaign from "./pages/CreateCampaign";
 import Logout from "./components/Logout";
 import { checkLogin, checkAdmin } from "./Helper";
-import "./App.css";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import NotFound from "./pages/NotFound";
@@ -17,7 +16,6 @@ import CampaignDetail from "./pages/CampaignDetail";
 import CampaignDetailFundraiser from "./pages/CampaignDetailFundraiser";
 import CampaignDonate from "./pages/Donate";
 import NotFoundMustLogin from "./pages/NotFoundMustLogin";
-import './App.css';
 
 function App() {
   return (
