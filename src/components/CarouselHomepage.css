@@ -44,3 +44,31 @@
     border-radius: 14px !important;
 }
 
+.img-carousel-dekstop{
+    display: block;
+}
+.img-carousel-mobile{
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .img-carousel-dekstop{
+        display: none;
+    }
+    .img-carousel-mobile{
+        display: block;
+    }
+
+    .carousel-indicators li{
+        width: 100px !important;
+        height: 10px !important;
+        border-radius: 50% !important;
+    }
+    
+    .carousel-indicators .active{
+        width: 100px !important;
+        height: 10px !important;
+        border-radius: 50px !important;
+    }
+   
+}

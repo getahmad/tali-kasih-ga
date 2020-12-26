@@ -85,6 +85,7 @@ const ProfileEdit = () => {
     Axios.post(urlProfileImage, formdata, config).then((res) => {
       console.log(res.data);
       history.push("/profile");
+      history.go(0)
     });
 
     const url = "https://binar8-agus-saputra.nandaworks.com/users";
@@ -154,10 +155,10 @@ const ProfileEdit = () => {
         <div className="border-container" style={{ marginBottom: "70px" }}>
           <div style={{ margin: "30px" }}>
             <Row>
-              <Col lg={6} className="d-flex justify-content-start">
+              <Col lg={6} xs={6} className="d-flex justify-content-start">
                 <h3 className="style-profile-title">My Profile</h3>
               </Col>
-              <Col lg={6} className="d-flex justify-content-end">
+              <Col lg={6} xs={6} className="d-flex justify-content-end">
                 <Link to="/logout" className="style-logout">
                   Logout
                 </Link>

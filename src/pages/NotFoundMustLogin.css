@@ -1,0 +1,29 @@
+.text-notfound h1{
+        font-size: 200px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 50px;
+}
+
+.text-notfound h2{
+        font-size: 50px;
+        text-align: center;
+        font-weight: bold;
+    
+}
+
+.img-notfound{
+    height: 500px;
+}
+
+@media only screen and (max-width: 768px) {
+  .img-notfound{
+      height: 450px;
+  }
+  .text-notfound h1{
+      font-size: 50px;
+  }
+  .text-notfound h2{
+      font-size: 25px;
+  }
+}

@@ -185,3 +185,21 @@
 .btn-detail-style{
     background: #A43F3C !important;
 }
+
+@media only screen and (max-width: 768px) {
+    .campaign-detail-title h4{
+        margin-top: 115px;
+        margin-bottom: 30px;
+        font-size: 25px;
+        line-height: 35px;
+    }
+    .content-title{
+        text-align: center;
+    }
+
+    .the-story{
+        padding: 0;
+        text-align: justify;
+    }
+   
+}

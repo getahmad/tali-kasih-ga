@@ -40,7 +40,7 @@ const TrendingTopic = () => {
                 </Link>
               </Col>
               <Col lg={5}>
-                <img src={Petik} alt="" />
+                <img className="petik-1" src={Petik} alt="" />
                 <p className="desc-trending">
                   Let's help each other to reach heaven. Don't even knock other
                   people down when you are victorious. On the contrary, take
@@ -50,7 +50,7 @@ const TrendingTopic = () => {
                 <img className="petik-2" src={Petik} alt="" />
                 <Row style={{ marginTop: "80px" }}>
                   <Col lg={3} xs={3}>
-                    <img style={{ width: "100%" }} src={Ava} alt="" />
+                    <img className="ava-trending" style={{ width: "100%" }} src={Ava} alt="" />
                   </Col>
                   <Col lg={9} xs={9}>
                     <h1 className="name-user">{data.name}</h1>

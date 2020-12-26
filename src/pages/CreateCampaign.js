@@ -7,19 +7,18 @@ import {
   Label,
   Input,
   Button,
-  Spinner
+  Spinner,
 } from "reactstrap";
 import Footer from "./layout/Footer";
 import TopMenu from "./layout/TopMenu";
 import React, { useEffect, useState } from "react";
-// import ImageUploader from "react-images-upload";
 import "font-awesome/css/font-awesome.min.css";
 import "./CreateCampaign.css";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import Axios from "axios";
 import ICPlus from "./images/ic-plus.png";
-// import Loading from "../components/Loading";
+import NumberFormat from "react-number-format";
 
 const CreateCampaign = (props) => {
   const [headerPhoto, setHeaderPhoto] = useState({ preview: "", raw: "" });
@@ -31,7 +30,7 @@ const CreateCampaign = (props) => {
   const [dueDate, setDueDate] = useState(null);
   const [storyText, setStoryText] = useState("");
   let history = useHistory();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const urlCategory = "https://binar8-agus-saputra.nandaworks.com/categories";
@@ -63,7 +62,7 @@ const CreateCampaign = (props) => {
   };
 
   const handleSubmit = (e) => {
-     setLoading(true)
+    setLoading(true);
     e.preventDefault();
     let formdata = new FormData();
     formdata.append("header", headerPhoto.raw);
@@ -85,11 +84,11 @@ const CreateCampaign = (props) => {
       .then((res) => {
         console.log(res.data);
         history.push("/discover");
-        setLoading(false)
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false)
+        setLoading(false);
       });
   };
 
@@ -117,11 +116,20 @@ const CreateCampaign = (props) => {
                   ) : (
                     <div className="style-upload-image">
                       <img src={ICPlus} alt="" />
-                      <h1 className="text-center mt-5">Add Header Photo</h1>
+                      <h1 className="text-center mt-5">
+                        Add Header Photo
+                        <sup>
+                          <i
+                            className="fa fa-asterisk"
+                            style={{ fontSize: "20px", color: "#A43F3C" }}
+                          ></i>
+                        </sup>
+                      </h1>
                     </div>
                   )}
                 </label>
                 <input
+                  required
                   type="file"
                   id="upload-button"
                   style={{ display: "none" }}
@@ -130,7 +138,7 @@ const CreateCampaign = (props) => {
               </Col>
             </Row>
             <Row style={{ marginTop: "40px" }}>
-              <Col>
+              <Col lg={6} xs={6}>
                 <FormGroup>
                   <Label for="exampletext">Title</Label>{" "}
                   <sup>
@@ -150,7 +158,7 @@ const CreateCampaign = (props) => {
                   />
                 </FormGroup>
               </Col>
-              <Col>
+              <Col lg={6} xs={6}>
                 <FormGroup>
                   <Label for="exampleSelect">Category</Label>{" "}
                   <sup>
@@ -160,6 +168,7 @@ const CreateCampaign = (props) => {
                     ></i>
                   </sup>
                   <Input
+                    required
                     type="select"
                     name="select"
                     id="exampleSelect"
@@ -176,28 +185,38 @@ const CreateCampaign = (props) => {
               </Col>
             </Row>
             <Row style={{ marginTop: "31px" }}>
-              <Col>
+              <Col lg={6} xs={6}>
                 <FormGroup>
-                  <Label for="exampleGoal">Goal</Label>{" "}
+                  <Label for="exampleGoal">Goal</Label>
                   <sup>
                     <i
                       className="fa fa-asterisk"
                       style={{ fontSize: "8px", color: "#A43F3C" }}
                     ></i>
                   </sup>
-                  <Input
-                    onChange={(e) => setGoal(e.target.value)}
-                    required
-                    type="number"
-                    name="number"
-                    id="exampleGoal"
-                    placeholder="e.g. 20000000"
+                  <br />
+
+                  <NumberFormat
+                    allowNegative="false"
+                    className="input-campaign"
+                    thousandSeparator={true}
+                    prefix={"IDR "}
+                    placeholder="e.g. 20,000,000"
+                    onValueChange={(values) => {
+                      setGoal(values.value);
+                    }}
                   />
                 </FormGroup>
               </Col>
-              <Col>
+              <Col lg={6} xs={6}>
                 <FormGroup>
                   <Label for="exampleDate">Due date </Label>
+                  <sup>
+                    <i
+                      className="fa fa-asterisk"
+                      style={{ fontSize: "8px", color: "#A43F3C" }}
+                    ></i>
+                  </sup>
                   <Input
                     onChange={(e) => setDueDate(e.target.value)}
                     type="date"
@@ -226,6 +245,12 @@ const CreateCampaign = (props) => {
             </Row>
 
             <Label className="mt-3 ">Story Image</Label>
+            <sup>
+              <i
+                className="fa fa-asterisk"
+                style={{ fontSize: "8px", color: "#A43F3C" }}
+              ></i>
+            </sup>
             <Row>
               <Col className="d-flex justify-content-center lg-12 style-story-image">
                 <div>
@@ -242,7 +267,15 @@ const CreateCampaign = (props) => {
                       ) : (
                         <div className="style-text-story-image mt-5 mb-5">
                           <img src={ICPlus} alt="" />
-                          <h1 className="mt-3">Add other photo</h1>
+                          <h1 className="mt-3">
+                            Add other photo
+                            <sup>
+                              <i
+                                className="fa fa-asterisk"
+                                style={{ fontSize: "15px", color: "#A43F3C" }}
+                              ></i>
+                            </sup>
+                          </h1>
                         </div>
                       )}
                     </label>
@@ -259,10 +292,10 @@ const CreateCampaign = (props) => {
             <Row>
               <Col className="d-flex justify-content-end">
                 <Button className="btn-create-campaign" type="submit">
-                   {loading? <Spinner color="light" /> : "CREATE CAMPAIGN" }
+                  {loading ? <Spinner color="light" /> : "CREATE CAMPAIGN"}
                 </Button>
               </Col>
-            </Row>            
+            </Row>
           </Form>
         </div>
       </Container>

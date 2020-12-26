@@ -56,7 +56,7 @@ const CampaignDetailInfo = () => {
         <h4>{campaignDetail.title}</h4>
       </div>
       <div className="row">
-        <div className="col-7">
+        <div className="col-lg-7">
           <div>
             <img
               className="img-campaign-detail"
@@ -65,7 +65,7 @@ const CampaignDetailInfo = () => {
             />
           </div>
         </div>
-        <div className="col-5">
+        <div className="col-lg-5">
           <Card className="campaign-detail-info">
             <CardBody>
               <CardText>

@@ -16,9 +16,9 @@ import Cookies from "js-cookie";
 import "./profile.css";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-// import CardCampaign from "../components/CardCampaign";
-import Avatar from "react-avatar"
+import Avatar from "react-avatar";
 import CardCampaignUser from "../components/CardCampaignUser";
+import dateFormat from "dateformat";
 
 const Profile = (props) => {
   const [data, setData] = useState([]);
@@ -27,7 +27,6 @@ const Profile = (props) => {
   const [noDataBank, setNoDataBank] = useState("");
   const [error, setError] = useState("");
   const [errorDonate, setErrorDonate] = useState("");
-  // const [idUser] = useState(Cookies.get("id"));
   const [dataDonateUser, setDataDonateUser] = useState([]);
 
   useEffect(() => {
@@ -80,13 +79,18 @@ const Profile = (props) => {
     })
       .then((res) => {
         setDataDonateUser(res.data);
-        // console.log(res.data);
       })
       .catch((err) => {
         setErrorDonate("No Data");
         console.log(err);
       });
   }, []);
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat('id-ID',
+      { minimumFractionDigits: 0 }
+    ).format(money);
+ }
 
   return (
     <>
@@ -95,16 +99,15 @@ const Profile = (props) => {
         <div className="border-container">
           <div style={{ margin: "30px" }}>
             <Row>
-              <Col lg={6} className="d-flex justify-content-start">
+              <Col lg={6} xs={6} className="d-flex justify-content-start">
                 <h3 className="style-profile-title">My Profile</h3>
               </Col>
-              <Col lg={6} className="d-flex justify-content-end">
+              <Col lg={6} xs={6} className="d-flex justify-content-end">
                 <Link to="/logout" className="style-logout">
                   Logout
                 </Link>
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
-                {/* <img src={ dataUser.photo === null? "https://i.postimg.cc/9MpKxPRQ/profile.png": dataUser.photo } alt=""/> */}
                 {dataUser.photo === null ? (
                   <Avatar name={dataUser.name} size="200" />
                 ) : (
@@ -154,12 +157,6 @@ const Profile = (props) => {
                 <Col lg={6}>
                   <FormGroup>
                     <Label for="exampletext">Bank Info</Label>
-                    {/* <Input
-                      disabled
-                      style={{ borderBottom: "none" }}
-                      value={`${dataBank.bankName}-${dataBank.bankNumber}`}
-                    />
-                    <p>{noDataBank}</p> */}
                     <Input type="select" name="select" id="exampleSelect">
                       {dataBank.map((dataBank) => (
                         <option value={dataBank.id}>
@@ -186,9 +183,11 @@ const Profile = (props) => {
                 <Col lg={6}>
                   <Card className="card-donate" style={{ marginTop: "30px" }}>
                     <div style={{ margin: "20px" }}>
-                      <p className="time-donate">{DonateUser.createdAt}</p>
+                      <p className="time-donate">
+                        {dateFormat(DonateUser.createdAt)}
+                      </p>
                       <p className="title-donate">{DonateUser.campaignTitle}</p>
-                      <h1 className="amount-donate">Rp. {DonateUser.amount}</h1>
+                      <h1 className="amount-donate">Rp. {formatRupiah(DonateUser.amount)}</h1>
                       <p className="story-donate">“{DonateUser.message}“</p>
                     </div>
                   </Card>

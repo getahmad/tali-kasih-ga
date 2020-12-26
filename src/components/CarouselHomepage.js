@@ -3,6 +3,9 @@ import { Col, Row } from "reactstrap";
 import Carousel1 from "./images/carousel1.png";
 import Carousel2 from "./images/carousel2.png";
 import Carousel3 from "./images/carousel3.png";
+import ImgCaoruselMobile from "./images/img-carousel-mobile.png"
+import ImgCaoruselMobile2 from "./images/img-carousel-mobile2.png"
+import ImgCaoruselMobile3 from "./images/img-carousel-mobile3.png"
 import "./CarouselHomepage.css";
 
 const CarouselHomepage = () => {
@@ -24,7 +27,8 @@ const CarouselHomepage = () => {
 
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src={Carousel1} className="d-block w-100" alt="..." />
+          <img src={Carousel1} className=" w-100 img-carousel-dekstop" alt="..." />
+          <img src={ImgCaoruselMobile} className="w-100 img-carousel-mobile" alt=""/>
           <div className="carousel-caption d-none d-md-block">
             <Row className="d-flex justify-content-start">
               <Col lg={7}>
@@ -50,7 +54,8 @@ const CarouselHomepage = () => {
           </div>
         </div>
         <div className="carousel-item">
-          <img src={Carousel2} className="d-block w-100" alt="..." />
+          <img src={Carousel2} className=" w-100 img-carousel-dekstop" alt="..." />
+          <img src={ImgCaoruselMobile2} className="w-100 img-carousel-mobile" alt=""/>
           <div className="carousel-caption d-none d-md-block">
             <Row className="d-flex justify-content-start">
               <Col lg={7}>
@@ -76,7 +81,8 @@ const CarouselHomepage = () => {
           </div>
         </div>
         <div className="carousel-item">
-          <img src={Carousel3} className="d-block w-100" alt="..." />
+          <img src={Carousel3} className=" w-100 img-carousel-dekstop" alt="..." />
+          <img src={ImgCaoruselMobile3} className="w-100 img-carousel-mobile" alt=""/>
           <div className="carousel-caption d-none d-md-block">
             <Row className="d-flex justify-content-start">
               <Col lg={7}>

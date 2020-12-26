@@ -14,19 +14,27 @@ import "./cardcampaign.css";
 import { Link } from "react-router-dom";
 
 const CardCampaign = (props) => {
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat('id-ID',
+      { minimumFractionDigits: 0 }
+    ).format(money);
+ }
+
+
   return (
     <div>
       <Row>
         {props.data.map((data) => (
           <>
-            <Col lg={4} xs={6} style={{ marginBottom: "30px" }}>
+            <Col lg={4}  style={{ marginBottom: "30px" }}>
               <Link
                 to={`/campaign/campaign-detail/${data.campaignId}`}
                 className="link-card"
               >
                 <Card className="card-style" key={data.campaignId}>
                   <CardImg
-                    style={{ maxHeight: "250px", minHeight: "230px",objectFit:"cover" }}
+                    style={{ maxHeight: "230px", minHeight: "230px",objectFit:"cover" }}
                     top
                     width="100%"
                     src={data.headerPhoto}
@@ -48,7 +56,7 @@ const CardCampaign = (props) => {
                         <Col>
                           <p className="info-text">Raised</p>
                           <p className="info-amount">
-                            IDR {data.raised === null ? 0 : data.raised}
+                            IDR {data.raised === null ? 0 : formatRupiah(data.raised)}
                           </p>
                         </Col>
                         <Col>
@@ -65,7 +73,7 @@ const CardCampaign = (props) => {
                               color: "black",
                             }}
                           >
-                            IDR {data.goal}
+                            IDR {formatRupiah(data.goal)}
                           </p>
                         </Col>
                       </Row>

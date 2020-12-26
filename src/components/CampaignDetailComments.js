@@ -72,10 +72,10 @@ const CampaignDetailComments = () => {
                             <div className="campaign-comments text-left">
                                 <div className="comments-card">
                                     <div className="row">
-                                        <div className="col-1 user-image">
-                                            <img src={ICampaignDetailDonator} alt=""/>
+                                        <div className=" user-image ml-3" lg={2}>
+                                            <img src={ICampaignDetailDonator} alt="" width="100%"/>
                                         </div>
-                                        <div className="col-5 user-info">
+                                        <div className="user-info px-3" lg={10}>
                                             {/* <p className="user-name"></p> */}
                                             <p className="comments-time">{comment.createdAt}</p>
                                         </div>
