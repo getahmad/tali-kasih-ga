@@ -1,3 +1,21 @@
 .container-admin {
     margin: 100px 0;
 }
+
+.border-admin {
+    margin-top: 30px;
+    border: 1px solid #E1E0E0;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+
+.btn-approve{
+    background: #A43F3C !important;
+    border-radius: 3px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px !important;    
+    font-weight: bold !important;
+    width: 100px;
+}

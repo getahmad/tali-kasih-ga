@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DataTable from "@bit/adeoy.utils.data-table";
-import Axios from "axios";
-import Cookies from "js-cookie";
-import TopMenu from "./layout/TopMenu";
-import Footer from "./layout/Footer";
 import {
-  Container,
   Col,
+  Container,
+  Table,
   TabContent,
   TabPane,
   Nav,
@@ -18,13 +14,19 @@ import {
   Input,
   Button,
 } from "reactstrap";
-import dateFormat from "dateformat";
-import { useHistory } from "react-router-dom";
+import Footer from "./layout/Footer";
+import TopMenu from "./layout/TopMenu";
+import "./admin.css";
+import Axios from "axios";
+import Cookies from "js-cookie";
 import classnames from "classnames";
+import dateFormat from "dateformat";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useHistory } from 'react-router'
 
 const Admin = () => {
   const [dataPayment, setDataPayment] = useState([]);
+
   useEffect(() => {
     const urlGetDataPayment =
       "https://binar8-agus-saputra.nandaworks.com/admin/donations";
@@ -39,7 +41,7 @@ const Admin = () => {
 
   const [idPayment, setIdPayment] = useState("");
   const [isPaidPayment, setIsPaidPayment] = useState(false);
-  const history = useHistory();
+  const history = useHistory()
   const handleApprove = (e) => {
     e.preventDefault();
     const urlApprovePayment =
@@ -53,7 +55,8 @@ const Admin = () => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      history.go(0);
+      // console.log(res.data);
+      history.go(0)
     });
   };
 
@@ -62,42 +65,6 @@ const Admin = () => {
       money
     );
   };
-
-  const data = dataPayment;
-  const columns = [
-    {
-      title: "Id",
-      format: (row) => (
-        <CopyToClipboard text={row.id}>
-          <Button className="btn btn-light" width="20px">copy</Button>
-        </CopyToClipboard>
-      ),
-    },
-    { title: "Date", format: (row) => dateFormat(row.createdAt) },
-    { title: "Name", data: "name" },
-    { title: "Campaign",data:"campaignTitle" },
-    {
-      title: "Is Paid",
-      format: (row) => (row.isPaid === 1 ? "Approved" : "pending"),
-    },
-    { title: "Amount", format: (row) => formatRupiah(row.amount) },
-    {
-      title: "Proof",
-      format: (row) => (
-        <a href={row.paymentPhoto} target="_blank" rel="noopener noreferrer">
-          <img
-            style={{ width: "50px", height: "50px", objectFit: "cover" }}
-            src={row.paymentPhoto}
-            alt={row.title}
-          />
-        </a>
-      ),
-    },
-  ];
-
-  // const click = (row) => {
-  //   console.log(row);
-  // };
 
   const [activeTab, setActiveTab] = useState("1");
   const toggle = (tab) => {
@@ -109,7 +76,7 @@ const Admin = () => {
       <TopMenu />
       <Container className="container-admin">
         <div className="border-admin">
-          <div style={{ marginTop: "120px", marginBottom: "70px" }}>
+          <div style={{ margin: "30px" }}>
             <Nav tabs>
               <NavItem>
                 <NavLink
@@ -136,30 +103,64 @@ const Admin = () => {
               <TabPane tabId="1">
                 <Row>
                   <Col sm="12">
-                    <h1
-                      style={{ textAlign: "center", margin: "30px" }}
-                      className="subtitle"
-                    >
+                    <h1 style={{ textAlign: "center", margin: "30px" }} className="subtitle">
                       All Payments
                     </h1>
-                    <DataTable
-                      data={data}
-                      columns={columns}
-                      striped={true}
-                      hover={true}
-                      responsive={true}
-                      //   onClickRow={click}
-                    />
+
+                    <Table size="md" striped>
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Date</th>
+                          <th>Name</th>
+                          <th>Amount</th>
+                          <th>Proof</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dataPayment.map((dataPayment) => (
+                          <tr>
+                            <td>
+                              <CopyToClipboard text={dataPayment.id}>
+                                <Button className="btn btn-light">copy</Button>
+                              </CopyToClipboard>
+                            </td>
+                            <td>
+                              {dateFormat(
+                                `${dataPayment.createdAt}`,
+                                "mmmm dS, yyyy"
+                              )}
+                            </td>
+                            <td>{dataPayment.name}</td>
+                            <td> IDR {formatRupiah(dataPayment.amount)}</td>
+                            <td>
+                              <a
+                                href={dataPayment.paymentPhoto}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                check
+                              </a>
+                            </td>
+                            <td>
+                              {dataPayment.isPaid === 1 ? (
+                                <p class="text-success">Finished</p>
+                              ) : (
+                                <p class="text-danger">Pending</p>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tabId="2">
                 <Row>
                   <Col sm="12">
-                    <h1
-                      style={{ textAlign: "center", margin: "30px 0" }}
-                      className="subtitle"
-                    >
+                    <h1 style={{ textAlign: "center", margin: "30px 0" }} className="subtitle">
                       Approve Payment
                     </h1>
                     <div
@@ -187,7 +188,7 @@ const Admin = () => {
                             id="exampleSelect"
                             onChange={(e) => setIsPaidPayment(e.target.value)}
                           >
-                            <option value="" disabled selected>
+                            <option value="true" disabled selected>
                               select
                             </option>
                             <option value="true">Approve</option>
@@ -208,7 +209,6 @@ const Admin = () => {
           </div>
         </div>
       </Container>
-
       <Footer />
     </>
   );

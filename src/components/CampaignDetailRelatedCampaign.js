@@ -44,7 +44,7 @@ const CampaignDetailRelatedCampaign = () => {
           <div className="title mt-3">Related Campaign</div>
           <div className="row">
             {relatedCampaign.slice(0,3).map((campaignRelated) => (
-              <div className="col-4">
+              <div className="col-lg-4 mb-4">
                 <Card className="card-style">
                   <CardImg
                     top

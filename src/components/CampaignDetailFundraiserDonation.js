@@ -44,7 +44,6 @@ const CampaignDetailFundraiserDonation = () => {
                                 </div>
                             </div>         
                         ))}
-                        {campaignDonation.length}
                     </div>
                     <div className="text-center">
                         <Button className="load-more-donator" outline color="info">LOAD MORE</Button>

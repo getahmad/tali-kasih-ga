@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactReadMoreReadLess from "react-read-more-read-less"; 
-import ICampaignDetail from "./images/campaign-detail.png";
 import ICampaignDetailUser from "./images/campaign-user.png";
 import ICampaignDetailSetting from "./images/setting.png"
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
 Card, 
@@ -15,6 +14,7 @@ Modal, ModalBody,
 ModalHeader,Input
 } from "reactstrap";
 import Axios from 'axios';
+import ModalCampaignUpdate from './ModalCampaignUpdate';
 
 
 
@@ -62,20 +62,20 @@ const CampaignDetailFundraiserInfo =()=>{
                     <img src={ICampaignDetailSetting} alt="campaign-setting"/>
                 </Button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" href="#">Edit</a>
-                    <a className="dropdown-item" href="#">Close Campaign</a>
-                    <a className="dropdown-item" style={{color: `red`}} href="#">Delete</a>
+                    <a className="dropdown-item" href="/">Edit</a>
+                    <a className="dropdown-item" href="/">Close Campaign</a>
+                    <a className="dropdown-item" style={{color: `red`}} href="/">Delete</a>
                 </div>
             </div>
             </div>
         </div>
         <div className="row">
-            <div className="col-7">
+            <div className="col-lg-7">
                 <div>
                 <img className="img-campaign-detail" src={campaignDetail.headerPhoto} alt="" />     
                 </div>
             </div>
-            <div className="col-5">
+            <div className="col-lg-5">
                 <Card className="campaign-detail-info">
                     <CardBody>
                         <CardText>
@@ -119,7 +119,7 @@ const CampaignDetailFundraiserInfo =()=>{
                             </div>
                         </div>
                         <Button className="share-campaign-button" outline color="info" onClick={toggle} block>SHARE</Button>
-                        <Button className="donate-campaign-button btn-detail-style"  block>New Progress</Button>
+                        <Button className="donate-campaign-button btn-detail-style"  block> <ModalCampaignUpdate/> </Button>
                     </CardBody>
                 </Card>
             </div>
@@ -155,7 +155,6 @@ const CampaignDetailFundraiserInfo =()=>{
                     >
                         {longText}
                         
-                        {/* {campaignDetail.storyText} */}
                     </ReactReadMoreReadLess>
                 </div>
             </div>

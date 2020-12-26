@@ -32,7 +32,7 @@ const Donate=()=>{
         <>
             <TopMenu/>
                 <div className="container donation-form">
-                    <Form className="w-100 mb-5">
+                    <Form className="w-100 mb-5" style={{padding:"0 100px"}}>
                         <h4 className="title-in-donation" >Donation</h4>
                         <hr/>
                         <div className="row">

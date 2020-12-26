@@ -54,7 +54,7 @@ const App = () => {
           </Route>
           <Route exact path="/profile">
             {checkLogin() && <Profile />}
-            {!checkLogin() && <NotFound />}
+            {!checkLogin() && <NotFoundMustLogin />}
           </Route>
           <Route exact path="/campaign/campaign-detail/:campaignId">
             <CampaignDetail />

@@ -28,7 +28,6 @@ label{
 
 
 .fileContainer{
-    /* position: relative; */
     background: #E1E0E0;
     height: 100%;
 }
@@ -59,7 +58,6 @@ label{
 .fileContainer .uploadPictureContainer{
     margin-top: 0 !important;
     padding-top: 0 !important;
-    /* position: absolute; */
     width: 100%;
     height: 100%;
 }
@@ -88,4 +86,31 @@ label{
     text-align: center;
     font-size: 36px;
     color: #9F9F9F ;
+}
+
+input{
+    width: 100%;
+    height: 37px;
+    background-color: #FCFCFC !important;
+    border: none !important;
+    border-bottom: 1px solid #9F9F9F !important;
+}
+
+input[type="text" i] {
+    color: #495057;
+}
+
+
+@media only screen and (max-width: 768px) {
+   
+.container-form{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.style-upload-image{
+    font-size: 32px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
 }

@@ -39,3 +39,12 @@ input[type=number] {
 .transfer-to input{
     border: none;
 }
+
+#donation-message{
+    height: 350px;
+}
+
+.form-check-input{
+    width: auto;
+    height: auto;
+}

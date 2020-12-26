@@ -41,3 +41,29 @@
 .as-user{
     font-size: 16px;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .title{
+        margin-top: -20px;
+    }
+    .subtitle{
+        font-size: 24px;
+    }
+    .desc-trending{
+        font-size: 20px;
+        line-height: 30px;
+    }
+    .petik-1{
+        width: 20px;
+      }
+    .petik-2{
+      width: 20px;
+    }
+    .name-user{
+     margin-top: -40px;   
+    }
+    .ava-trending{
+        margin-top: -40px;  
+    }
+}
