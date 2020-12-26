@@ -197,6 +197,7 @@ const CreateCampaign = (props) => {
                   <br />
 
                   <NumberFormat
+                    allowNegative="false"
                     className="input-campaign"
                     thousandSeparator={true}
                     prefix={"IDR "}
