@@ -4,7 +4,7 @@ const LoginProses = () => {
   window.location.reload();
   let history = useHistory();
   history.push("/");
-  return null
+  return null;
 };
 
 export default LoginProses;

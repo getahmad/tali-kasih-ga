@@ -7,12 +7,12 @@ import TopMenu from "./layout/TopMenu";
 
 const Home = () => {
   return (
-    <div >
+    <div>
       <TopMenu />
-      <CarouselHomepage/>
+      <CarouselHomepage />
       <TrendingTopic />
       <NewTopic />
-      <MoreInfo/>
+      <MoreInfo />
       <Footer />
     </div>
   );

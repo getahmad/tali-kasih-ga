@@ -30,7 +30,10 @@ const TrendingTopic = () => {
         )}
         {!loading && (
           <div>
-            <Link to={`/campaign/campaign-detail/${data.campaignId}`} style={{ textDecoration: "none" }}>
+            <Link
+              to={`/campaign/campaign-detail/${data.campaignId}`}
+              style={{ textDecoration: "none" }}
+            >
               <h1 className="subtitle">{data.title}</h1>
             </Link>
             <Row style={{ marginBottom: "70px" }}>
@@ -50,7 +53,12 @@ const TrendingTopic = () => {
                 <img className="petik-2" src={Petik} alt="" />
                 <Row style={{ marginTop: "80px" }}>
                   <Col lg={3} xs={3}>
-                    <img className="ava-trending" style={{ width: "100%" }} src={Ava} alt="" />
+                    <img
+                      className="ava-trending"
+                      style={{ width: "100%" }}
+                      src={Ava}
+                      alt=""
+                    />
                   </Col>
                   <Col lg={9} xs={9}>
                     <h1 className="name-user">{data.name}</h1>

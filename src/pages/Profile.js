@@ -41,7 +41,7 @@ const Profile = (props) => {
       })
       .catch((err) => {
         setError("No Data");
-        console.log(err);
+        // console.log(err);
       });
 
     const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
@@ -68,7 +68,7 @@ const Profile = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     const urlGetDonate = `https://binar8-agus-saputra.nandaworks.com/donations/user`;
@@ -82,15 +82,15 @@ const Profile = (props) => {
       })
       .catch((err) => {
         setErrorDonate("No Data");
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
   const formatRupiah = (money) => {
-    return new Intl.NumberFormat('id-ID',
-      { minimumFractionDigits: 0 }
-    ).format(money);
- }
+    return new Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+      money
+    );
+  };
 
   return (
     <>
@@ -164,7 +164,7 @@ const Profile = (props) => {
                         </option>
                       ))}
                     </Input>
-                    <p>{noDataBank}</p>
+                    <span>{noDataBank}</span>
                   </FormGroup>
                 </Col>
               </Row>
@@ -178,7 +178,7 @@ const Profile = (props) => {
               My Donations ({dataDonateUser.length})
             </h3>
             <Row className="d-flex justify-content-center">
-              <p>{errorDonate}</p>
+              <span>{errorDonate}</span>
               {dataDonateUser.map((DonateUser) => (
                 <Col lg={6}>
                   <Card className="card-donate" style={{ marginTop: "30px" }}>
@@ -187,7 +187,9 @@ const Profile = (props) => {
                         {dateFormat(DonateUser.createdAt)}
                       </p>
                       <p className="title-donate">{DonateUser.campaignTitle}</p>
-                      <h1 className="amount-donate">Rp. {formatRupiah(DonateUser.amount)}</h1>
+                      <h1 className="amount-donate">
+                        Rp. {formatRupiah(DonateUser.amount)}
+                      </h1>
                       <p className="story-donate">“{DonateUser.message}“</p>
                     </div>
                   </Card>
@@ -210,7 +212,7 @@ const Profile = (props) => {
             </h3>
             <Row style={{ marginTop: "20px" }}>
               <Col className="d-flex justify-content-center">
-                <p>{error}</p>
+                <span>{error}</span>
                 <CardCampaignUser data={data} />
               </Col>
               <Col lg={12} className="d-flex justify-content-center mt-5">

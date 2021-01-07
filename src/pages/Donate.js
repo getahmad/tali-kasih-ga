@@ -18,15 +18,16 @@ import {
   FormGroup,
   Label,
   Input,
+  Spinner,
 } from "reactstrap";
-import Medical from "../components/images/medical.png";
 import "./donate.css";
 import Axios from "axios";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import NumberFormat from "react-number-format";
+import "font-awesome/css/font-awesome.min.css";
 
-const Donate = () => {
+const Donate = (props) => {
   const accountNumber = "1234 5678 90";
   const accountHolder = "Tali Kasih";
   const [amount, setAmount] = useState(0);
@@ -36,26 +37,25 @@ const Donate = () => {
   const [checked, setChecked] = useState(false);
   const userToken = Cookies.get(`token`);
   let { campaignId } = useParams();
-  // let {donationId} = useParams()
+  const [loading, setLoading] = useState(false);
 
   const handleCheckedBox = () => setChecked(!checked);
-
+  const history = useHistory();
   // get campaign
   useEffect(() => {
     Axios.get(
       `https://binar8-agus-saputra.nandaworks.com/campaigns?campaigns.id=${campaignId}`
     ).then((response) => {
-      console.log(response.data);
-      // console.log(typeof response.data)
+      // console.log(response.data);
       setThisCampaign(response.data[0]);
     });
   }, [campaignId]);
 
   // post donation
   const submitDonation = (e) => {
+    setLoading(true);
     e.preventDefault();
     const urlPost = `https://binar8-agus-saputra.nandaworks.com/donations`;
-    // const urlPhoto= `https://binar8-agus-saputra.nandaworks.com/donations/photo?id=a5ad1b3b-b094-48cd-982e-1841209ada6d`
     const postDonate = {
       campaignId: campaignId,
       amount: parseInt(amount),
@@ -66,18 +66,32 @@ const Donate = () => {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
-    }).then((response) => {
-      console.log(response.data);
-    });
+    })
+      .then((response) => {
+        // console.log(response.data);
+        history.push("/discover");
+        history.go(0);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // console.log(error);
+        setLoading(false);
+      });
   };
 
   if (checked === true) {
     donatorName = document.getElementById("donation-anonim").value;
-    console.log("check");
-    console.log(donatorName);
+    // console.log("check");
+    // console.log(donatorName);
   } else {
-    console.log("uncheck");
+    // console.log("uncheck");
   }
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+      money
+    );
+  };
 
   return (
     <>
@@ -85,27 +99,41 @@ const Donate = () => {
       <div className="container donation-form">
         <Form
           onSubmit={submitDonation}
-          className="w-100 mb-5"
-          style={{ padding: "0 100px" }}
+          className="w-100 mb-5 form-padding"
+          // style={{ padding: "0 100px" }}
+          // className=""
         >
           <h4 className="title-in-donation">Donation</h4>
           <hr />
           <div className="row">
-            <div className="col">
+            <div className="col-lg-6">
               <FormGroup>
                 <Label for="donation-amount">Amount</Label>
-                <Input
-                  type="number"
-                  min="0"
-                  max="999999999999999999"
-                  name="total-amount"
-                  id="donation-amount"
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="0"
+                <sup>
+                  <i
+                    className="fa fa-asterisk"
+                    style={{ fontSize: "8px", color: "#A43F3C" }}
+                  ></i>
+                </sup>
+                <NumberFormat
+                  allowNegative={false}
+                  className="input-campaign"
+                  thousandSeparator={true}
+                  prefix={"IDR "}
+                  placeholder="e.g. 20,000,000"
+                  onValueChange={(values) => {
+                    setAmount(values.value);
+                  }}
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="donation-donator">Name</Label>
+                <sup>
+                  <i
+                    className="fa fa-asterisk"
+                    style={{ fontSize: "8px", color: "#A43F3C" }}
+                  ></i>
+                </sup>
                 <Input
                   type="text"
                   name="total-amount"
@@ -128,6 +156,12 @@ const Donate = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="donation-message">Message</Label>
+                <sup>
+                  <i
+                    className="fa fa-asterisk"
+                    style={{ fontSize: "8px", color: "#A43F3C" }}
+                  ></i>
+                </sup>
                 <Input
                   type="textarea"
                   name="text"
@@ -136,7 +170,7 @@ const Donate = () => {
                 />
               </FormGroup>
             </div>
-            <div className="col">
+            <div className="col-lg-6">
               <Card className="card-style">
                 <CardImg
                   top
@@ -163,7 +197,9 @@ const Donate = () => {
                     <Row>
                       <Col>
                         <p className="info-text">Raised</p>
-                        <p className="info-amount">{thisCampaign.raised}</p>
+                        <p className="info-amount">
+                          {formatRupiah(thisCampaign.raised)}
+                        </p>
                       </Col>
                       <Col>
                         <p style={{ textAlign: "right" }} className="info-text">
@@ -176,7 +212,7 @@ const Donate = () => {
                             color: "black",
                           }}
                         >
-                          IDR {thisCampaign.goal}
+                          IDR {formatRupiah(thisCampaign.goal)}
                         </p>
                       </Col>
                     </Row>
@@ -185,7 +221,7 @@ const Donate = () => {
               </Card>
             </div>
           </div>
-          <div className="mt-4 justify-content-end">
+          <div className="mt-4 justify-content-end ">
             <h4>Payment</h4>
             <hr />
             <FormGroup>
@@ -194,7 +230,7 @@ const Donate = () => {
                 <img src={bankTransferImg} alt="" />
                 <p className="mt-2 mb-0">Bank Transfer</p>
               </div>
-              <div className="transfer-to col-6 p-4 mt-4">
+              <div className="transfer-to col-lg-6 p-4 mt-4">
                 <p className="transfer-to-text">Transfer to</p>
                 <div className="row">
                   <div className="transfer-to-info col-12">Account Number</div>
@@ -207,7 +243,7 @@ const Donate = () => {
                       disabled
                     />
                   </div>
-                  <div className="col-6 text-right">
+                  <div className="col text-right">
                     <CopyToClipboard text={accountNumber}>
                       <Button className="btn btn-light">copy</Button>
                     </CopyToClipboard>
@@ -217,7 +253,7 @@ const Donate = () => {
                   <div className="transfer-to-info col-12">
                     Account Holder Name
                   </div>
-                  <div className="col-6 mt-1">
+                  <div className="col mt-1">
                     <input
                       type="text"
                       id="account-holder"
@@ -231,7 +267,7 @@ const Donate = () => {
                 <div className="row mt-3">
                   <div className="transfer-to-info col-12">Total Amount</div>
                   <div className="col-6 mt-1">
-                    IDR{" "}
+                    {/* IDR{" "} */}
                     <input
                       type="number"
                       id="transfer-total-amount"
@@ -247,7 +283,7 @@ const Donate = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-6 p-4 mt-4">
+              {/* <div className="col-6 p-4 mt-4">
                 <p className="transfer-to-text">Upload Transfer</p>
                 Select image to upload: <br />
                 <input
@@ -255,11 +291,11 @@ const Donate = () => {
                   name="transferUpload"
                   id="transferUpload"
                 ></input>
-              </div>
+              </div> */}
             </FormGroup>
-            <div className="text-right ">
+            <div className="text-right mb-5 ">
               <Button className="btn-detail-style" type="submit">
-                Submit
+                {loading ? <Spinner color="light" /> : "Submit"}
               </Button>
             </div>
           </div>

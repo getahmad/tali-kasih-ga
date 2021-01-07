@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { Form, FormGroup, Input, Modal, ModalBody, Button, Spinner } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Modal,
+  ModalBody,
+  Button,
+  Spinner,
+} from "reactstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ICgoogle from "./images/ic-google.png";
@@ -18,12 +26,12 @@ const Register = () => {
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
   const [errorRegister, setErrorRegister] = useState("");
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   let history = useHistory();
 
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     const url = "https://binar8-agus-saputra.nandaworks.com/auth/register";
     const bodyData = {
@@ -34,17 +42,17 @@ const Register = () => {
     axios
       .post(url, bodyData)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         Cookies.set("id", res.data.id);
         Cookies.set("name", res.data.name);
         Cookies.set("email", res.data.email);
         Cookies.set("token", res.data.token);
         history.push("/login-proses");
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
         setErrorRegister("email already exists");
-        setLoading(false)
+        setLoading(false);
       });
   };
 
@@ -54,7 +62,7 @@ const Register = () => {
     if (!value) {
       setErrorConfirmPassword("confirm password tidak boleh kosong");
     } else if (password !== value) {
-      setErrorConfirmPassword("password tidak cocok");
+      setErrorConfirmPassword("passwords do not match");
     } else {
       setErrorConfirmPassword("");
     }
@@ -121,7 +129,6 @@ const Register = () => {
                 name="password"
                 placeholder="Password"
                 value={password}
-                // onChange={(e) => setPassword(e.target.value)}
                 onChange={checkPasswordFormat}
                 required
               />
@@ -149,12 +156,12 @@ const Register = () => {
               )}
             </FormGroup>
             <Button className="btn-login">
-              {loading? <Spinner color="light" /> : "LOGIN" } 
+              {loading ? <Spinner color="light" /> : "LOGIN"}
             </Button>
             <p style={{ textAlign: "center", color: "red" }}>{errorRegister}</p>
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />
-              <p>Continue with Google</p>
+              <span>Continue with Google</span>
             </div>
           </Form>
         </ModalBody>

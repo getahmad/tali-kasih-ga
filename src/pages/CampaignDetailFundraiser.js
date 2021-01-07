@@ -3,7 +3,6 @@ import TopMenu from "./layout/TopMenu";
 import Footer from "./layout/Footer";
 import CampaignDetailFundraiserInfo from "../components/CampaignDetailFundraiserInfo";
 import CampaignDetailFundraiserUpdates from "../components/CampaignDetailFundraiserUpdates";
-
 import "./campaigndetail.css";
 import CampaignDetailFundraiserDonation from "../components/CampaignDetailFundraiserDonation";
 import CampaignDetailFundraiserComments from "../components/CampaignDetailFundraiserComments";

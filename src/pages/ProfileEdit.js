@@ -56,7 +56,7 @@ const ProfileEdit = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     const urlDataUser = "https://binar8-agus-saputra.nandaworks.com/users";
@@ -83,9 +83,9 @@ const ProfileEdit = () => {
       },
     };
     Axios.post(urlProfileImage, formdata, config).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       history.push("/profile");
-      history.go(0)
+      history.go(0);
     });
 
     const url = "https://binar8-agus-saputra.nandaworks.com/users";
@@ -99,12 +99,11 @@ const ProfileEdit = () => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       Cookies.set("name", res.data.name);
       Cookies.set("email", res.data.email);
       // Cookies.set("password", res.data.password)
       history.push("/profile");
-      
     });
 
     const urlPostBank = "https://binar8-agus-saputra.nandaworks.com/bank/info";
@@ -117,7 +116,7 @@ const ProfileEdit = () => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       history.push("/profile");
     });
 
@@ -132,7 +131,7 @@ const ProfileEdit = () => {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
@@ -285,8 +284,8 @@ const ProfileEdit = () => {
                     <Label for="exampletext">Create Bank Number</Label>
                     <Input
                       className="form-style"
-                      type="text"
-                      name="text"
+                      type="number"
+                      name="number"
                       // placeholder={bankAccountName}
                       // value={bankNumberCookies}
                       onChange={(e) => setBankNumber(e.target.value)}
@@ -326,7 +325,7 @@ const ProfileEdit = () => {
                           </option>
                         ))}
                       </Input>
-                      <p>{noDataBank}</p>
+                      <span>{noDataBank}</span>
                     </FormGroup>
                   </Col>
                   <Col lg={4}>

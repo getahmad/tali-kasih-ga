@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { Form, FormGroup, Input, Modal, ModalBody, Button, Spinner } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Modal,
+  ModalBody,
+  Button,
+  Spinner,
+} from "reactstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ICgoogle from "./images/ic-google.png";
@@ -15,12 +23,12 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   let history = useHistory();
 
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     const url = "https://binar8-agus-saputra.nandaworks.com/auth/login";
     const bodyData = {
@@ -35,22 +43,19 @@ const Login = (props) => {
         Cookies.set("name", res.data.name);
         Cookies.set("email", res.data.email);
         Cookies.set("token", res.data.token);
-        Cookies.set("isAdmin",res.data.isAdmin);
+        Cookies.set("isAdmin", res.data.isAdmin);
         history.push("/login-proses");
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => {
         setErrorLogin("Email and password do not match");
-        setLoading(false)
+        setLoading(false);
       });
   };
 
   return (
     <div>
-      <span 
-        onClick={toggle}
-        style={{ color: "#1D94A8" }}
-      >
+      <span onClick={toggle} style={{ color: "#1D94A8" }}>
         Login
       </span>
       <Modal isOpen={modal} toggle={toggle}>
@@ -58,7 +63,11 @@ const Login = (props) => {
           <Form className="form-modal" onSubmit={handleSubmit}>
             <h1 className="title-modal">Login</h1>
             <p className="subtitle-modal d-flex justify-content-start">
-              New user? <NavLink to="/"> <Register/> </NavLink>
+              New user?{" "}
+              <NavLink to="/">
+                {" "}
+                <Register />{" "}
+              </NavLink>
             </p>
             <FormGroup style={{ marginTop: "40px" }}>
               <Input
@@ -80,18 +89,18 @@ const Login = (props) => {
                 required
               />
             </FormGroup>
-            <NavLink to="/login-proses">
+            <NavLink to="#">
               <p className="subtitle-modal">forgot password?</p>
             </NavLink>
-        
+
             <Button className="btn-login" type="submit">
-            {loading? <Spinner color="light" /> : "LOGIN" }            
+              {loading ? <Spinner color="light" /> : "LOGIN"}
             </Button>
             <p style={{ textAlign: "center", color: "red" }}>{errorLogin}</p>
 
             <div className="login-google d-flex justify-content-center">
               <img className="ic-google" src={ICgoogle} alt="" />
-              <p>Continue with Google</p>
+              <span>Continue with Google</span>
             </div>
           </Form>
         </ModalBody>

@@ -8,16 +8,25 @@ import dateFormat from "dateformat";
 const CampaignDetailDonation = () => {
   const [campaignDonation, setCampaignDonation] = useState([]);
   let { campaignId } = useParams();
+  const [err, setErr] = useState("");
+
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+      money
+    );
+  };
 
   useEffect(() => {
     Axios.get(
       `https://binar8-agus-saputra.nandaworks.com/donations?campaignId=${campaignId}`
-    ).then((response) => {
-      // console.log("donasi")
-      // console.log(response.data)
-      setCampaignDonation(response.data);
-    });
-  });
+    )
+      .then((response) => {
+        setCampaignDonation(response.data);
+      })
+      .catch(() => {
+        setErr("no data");
+      });
+  }, [campaignId]);
 
   return (
     <div className="custom-card campaign-donations my-5 py-4 px-3">
@@ -25,8 +34,9 @@ const CampaignDetailDonation = () => {
         <div className="title mt-3">Donations</div>
         <div className="content-donations">
           <div className="row justify-content-center">
+            <span>{err}</span>
             {campaignDonation.map((campaignDonation) => (
-              <div className="col-lg-6 mb-3">
+              <div className="col-lg-6 mb-3" key={campaignDonation.id}>
                 <div className=" custom-card-donation py-3 px-3">
                   <div className="row">
                     <div className="col-3 user-image">
@@ -34,7 +44,7 @@ const CampaignDetailDonation = () => {
                     </div>
                     <div className="col-8 user-info ml-1">
                       <p className="user-donation">
-                        Rp. {campaignDonation.amount}
+                        Rp. {formatRupiah(campaignDonation.amount)}
                       </p>
                       <p className="user-name">{campaignDonation.name}</p>
                       <p className="donate-time">
@@ -43,7 +53,7 @@ const CampaignDetailDonation = () => {
                     </div>
                   </div>
                   <div className="user-comments">
-                    <p>"{campaignDonation.message}"</p>
+                    <span>"{campaignDonation.message}"</span>
                   </div>
                 </div>
               </div>

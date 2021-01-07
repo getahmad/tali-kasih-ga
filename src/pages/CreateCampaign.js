@@ -82,12 +82,12 @@ const CreateCampaign = (props) => {
     };
     Axios.post(urlCreateCampaign, formdata, config)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         history.push("/discover");
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setLoading(false);
       });
   };
@@ -197,7 +197,7 @@ const CreateCampaign = (props) => {
                   <br />
 
                   <NumberFormat
-                    allowNegative="false"
+                    allowNegative={false}
                     className="input-campaign"
                     thousandSeparator={true}
                     prefix={"IDR "}

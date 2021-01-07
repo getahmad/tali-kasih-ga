@@ -46,21 +46,24 @@ const DiscoverCategory = () => {
 
   const sortUrgent = (e) => {
     e.preventDefault();
-    const urlDataUrgent="https://binar8-agus-saputra.nandaworks.com/campaigns/urgent/more"
+    const urlDataUrgent =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/urgent/more";
     axios.get(urlDataUrgent).then((res) => {
       setData(res.data.filter((data) => data.category === category));
     });
   };
   const sortLessDonate = (e) => {
     e.preventDefault();
-    const urlDataLess ="https://binar8-agus-saputra.nandaworks.com/campaigns/less/donate/more"
+    const urlDataLess =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/less/donate/more";
     axios.get(urlDataLess).then((res) => {
       setData(res.data.filter((data) => data.category === category));
     });
   };
   const sortPopular = (e) => {
     e.preventDefault();
-    const urlDataPupular="https://binar8-agus-saputra.nandaworks.com/campaigns/popular/more"
+    const urlDataPupular =
+      "https://binar8-agus-saputra.nandaworks.com/campaigns/popular/more";
     axios.get(urlDataPupular).then((res) => {
       setData(res.data.filter((data) => data.category === category));
     });

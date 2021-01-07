@@ -1,15 +1,15 @@
-  .pagination li{
-    margin-left: 10px !important;    
-  }
+.pagination li{
+  margin-left: 10px !important;    
+}
 
-  .page-link{
-    border: none !important;
-    color: black !important;
-    font-weight: bold !important;
-  }
+.page-link{
+  border: none !important;
+  color: black !important;
+  font-weight: bold !important;
+}
 
-  .page-item.active .page-link{
-    background-color: #F1EDE4 !important;
-    color: black !important;
-    font-weight: bold !important;
-  }
+.page-item.active .page-link{
+  background-color: #F1EDE4 !important;
+  color: black !important;
+  font-weight: bold !important;
+}

@@ -15,6 +15,8 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "font-awesome/css/font-awesome.min.css";
+import NumberFormat from "react-number-format";
 
 const ModalCampaignUpdate = (props) => {
   const [modal, setModal] = useState(false);
@@ -47,7 +49,7 @@ const ModalCampaignUpdate = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setLoading(false);
         history.go(0);
       })
@@ -99,16 +101,31 @@ const ModalCampaignUpdate = (props) => {
               </FormGroup>
               <FormGroup>
                 <Label for="exampleEmail">Amount</Label>
-                <Input
-                  type="number"
-                  name="number"
-                  id="number"
-                  onChange={(e) => setWithdrawalAmount(e.target.value)}
-                  placeholder="20.000.000"
+                <sup>
+                  <i
+                    className="fa fa-asterisk"
+                    style={{ fontSize: "8px", color: "#A43F3C" }}
+                  ></i>
+                </sup>
+                <NumberFormat
+                  allowNegative="false"
+                  className="input-campaign"
+                  thousandSeparator={true}
+                  prefix={"IDR "}
+                  placeholder="e.g. 20,000,000"
+                  onValueChange={(values) => {
+                    setWithdrawalAmount(values.value);
+                  }}
                 />
               </FormGroup>
               <FormGroup style={{ marginTop: "40px" }}>
                 <Label for="exampleText">Text Area</Label>
+                <sup>
+                  <i
+                    className="fa fa-asterisk"
+                    style={{ fontSize: "8px", color: "#A43F3C" }}
+                  ></i>
+                </sup>
                 <Input
                   style={{ height: "100px" }}
                   type="textarea"

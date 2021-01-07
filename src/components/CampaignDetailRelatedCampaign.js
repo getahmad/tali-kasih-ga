@@ -1,6 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Card,
   CardText,
@@ -21,7 +21,7 @@ const CampaignDetailRelatedCampaign = () => {
     Axios.get(
       `https://binar8-agus-saputra.nandaworks.com/campaigns?campaigns.id=${campaignId}`
     ).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       Cookies.set(`category`, response.data[0].category);
       getRelatedCampaign();
     });
@@ -33,18 +33,27 @@ const CampaignDetailRelatedCampaign = () => {
         `category`
       )}`
     ).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setRelatedCampaign(response.data);
     });
   };
 
+  const formatRupiah = (money) => {
+    return new Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+      money
+    );
+  };
   return (
-      <div className="related-campaign background-biru-related py-5 px-3">
-        <div className="container">
-          <div className="title mt-3">Related Campaign</div>
-          <div className="row">
-            {relatedCampaign.slice(0,3).map((campaignRelated) => (
-              <div className="col-lg-4 mb-4">
+    <div className="related-campaign background-biru-related py-5 px-3">
+      <div className="container">
+        <div className="title mt-3">Related Campaign</div>
+        <div className="row">
+          {relatedCampaign.slice(0, 3).map((campaignRelated) => (
+            <div className="col-lg-4 mb-4" key={campaignRelated.campaignId}>
+              <Link
+                to={`/campaign/campaign-detail/${campaignRelated.campaignId}`}
+                className="link-card"
+              >
                 <Card className="card-style">
                   <CardImg
                     top
@@ -52,7 +61,7 @@ const CampaignDetailRelatedCampaign = () => {
                     src={campaignRelated.headerPhoto}
                     alt="Card image cap"
                     style={{
-                      maxHeight: "250px",
+                      maxHeight: "230px",
                       minHeight: "230px",
                       objectFit: "cover",
                     }}
@@ -77,7 +86,7 @@ const CampaignDetailRelatedCampaign = () => {
                         <Col>
                           <p className="info-text">Raised</p>
                           <p className="info-amount">
-                            IDR {campaignRelated.raised}
+                            IDR {formatRupiah(campaignRelated.raised)}
                           </p>
                         </Col>
                         <Col>
@@ -94,18 +103,19 @@ const CampaignDetailRelatedCampaign = () => {
                               color: "black",
                             }}
                           >
-                            IDR {campaignRelated.goal}
+                            IDR {formatRupiah(campaignRelated.goal)}
                           </p>
                         </Col>
                       </Row>
                     </CardText>
                   </CardBody>
                 </Card>
-              </div>
-            ))}
-          </div>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
+    </div>
   );
 };
 

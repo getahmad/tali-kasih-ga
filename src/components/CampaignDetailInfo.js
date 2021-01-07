@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactReadMoreReadLess from "react-read-more-read-less";
-import ICampaignDetail from "./images/campaign-detail.png";
 import ICampaignDetailUser from "./images/campaign-user.png";
 import { Link, useParams } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -16,7 +15,6 @@ import {
   Input,
 } from "reactstrap";
 import Axios from "axios";
-import CampaignDetail from "../pages/CampaignDetail";
 
 const CampaignDetailInfo = () => {
   const [campaignDetail, setCampaignDetail] = useState([]);
@@ -33,7 +31,7 @@ const CampaignDetailInfo = () => {
 
   const timeBetween = targetTime - currentTime;
   const days = Math.floor(timeBetween / (1000 * 60 * 60 * 24));
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(Date.now());
@@ -46,18 +44,30 @@ const CampaignDetailInfo = () => {
     Axios.get(
       `https://binar8-agus-saputra.nandaworks.com/campaigns?campaigns.id=${campaignId}`
     ).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setCampaignDetail(response.data[0]);
     });
   }, [campaignId]);
 
+  const [campaignDonation, setCampaignDonation] = useState([]);
 
+  useEffect(() => {
+    Axios.get(
+      `https://binar8-agus-saputra.nandaworks.com/donations?campaignId=${campaignId}`
+    )
+      .then((response) => {
+        setCampaignDonation(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [campaignId]);
 
   const formatRupiah = (money) => {
-    return new Intl.NumberFormat('id-ID',
-      { minimumFractionDigits: 0 }
-    ).format(money);
- }
+    return new Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+      money
+    );
+  };
 
   return (
     <div>
@@ -78,9 +88,18 @@ const CampaignDetailInfo = () => {
           <Card className="campaign-detail-info">
             <CardBody>
               <CardText>
-                <p className="total-donation">
-                  IDR
-                  {campaignDetail.raised == null ? 0 : formatRupiah(campaignDetail.raised)}
+                <p
+                  className="total-donation"
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    color: "#A43F3C",
+                  }}
+                >
+                  IDR &nbsp;
+                  {campaignDetail.raised == null
+                    ? 0
+                    : formatRupiah(campaignDetail.raised)}
                 </p>
                 <p className="target-donation">
                   from IDR {formatRupiah(campaignDetail.goal)}
@@ -105,9 +124,7 @@ const CampaignDetailInfo = () => {
                   <Card>
                     <CardText>
                       <p className="campaign-donation-info-number">
-                        {campaignDetail.dueDate == null
-                          ? 10
-                          : days}
+                        {campaignDetail.dueDate == null ? 0 : days}
                       </p>
                       <p className="campaign-donation-info-detail">Days left</p>
                     </CardText>
@@ -116,7 +133,9 @@ const CampaignDetailInfo = () => {
                 <div className="col campaign-donation-info">
                   <Card>
                     <CardText>
-                      <p className="campaign-donation-info-number">132</p>
+                      <p className="campaign-donation-info-number">
+                        {campaignDonation.length}
+                      </p>
                       <p className="campaign-donation-info-detail">Donations</p>
                     </CardText>
                   </Card>
@@ -139,7 +158,7 @@ const CampaignDetailInfo = () => {
               >
                 SHARE
               </Button>
-              <Button className="donate-campaign-button btn-detail-style"  block>
+              <Button className="donate-campaign-button btn-detail-style" block>
                 <Link
                   to={`/campaign/campaign-detail/donate/${campaignDetail.campaignId}`}
                 >
@@ -160,7 +179,7 @@ const CampaignDetailInfo = () => {
 
             <div className="col-3">
               <CopyToClipboard text={urlNowWeb}>
-                <Button className="btn-detail-style" block >
+                <Button className="btn-detail-style" block>
                   Copy
                 </Button>
               </CopyToClipboard>
@@ -172,6 +191,18 @@ const CampaignDetailInfo = () => {
       <div className="the-story background-biru my-5 py-4">
         <div className="content">
           <div className="content-title mt-3">The Story</div>
+          <div className="d-flex justify-content-center">
+            <img
+              src={campaignDetail.storyImage}
+              alt=""
+              style={{
+                maxHeight: "230px",
+                // minHeight: "230px",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+          <br />
           <div className="content-text">
             <ReactReadMoreReadLess
               charLimit={500}

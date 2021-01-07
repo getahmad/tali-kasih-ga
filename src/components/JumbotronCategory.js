@@ -6,8 +6,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./jumbotroncategory.css";
 
 const JumbotronCategory = (props) => {
-
-  let {category} = useParams();
+  let { category } = useParams();
   return (
     <div style={{ marginTop: "70px" }}>
       <Jumbotron
